@@ -1,0 +1,139 @@
+body {
+    position: relative;
+    display: block;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    width: 720px;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: 400;
+}
+
+.wallets {
+    background-color: #eef2f5;
+    text-align: center;
+}
+
+.wallet {
+    background-color: #fff;
+    //padding: 32px;
+    margin: 32px;
+    position: relative;
+}
+
+.wallet-image {
+    position: absolute;
+    top: 55px;
+    left: 40px;
+    background-image: url(assets/icon_wallet_gray.svg);
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+}
+
+.wallet-name {
+    text-align: left;
+    font-size: 32px;
+    margin-left: 80px;
+    padding-top: 32px;
+    padding-left: 32px;
+}
+
+.wallet-hash {
+    text-align: left;
+    font-size: 24px;
+    margin-left: 80px;
+    color: #838c93;
+    opacity: .8;
+    padding-left: 32px;
+}
+
+.wallet-currencies {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin-top: 60px;
+}
+
+.currency-usd, .currency-rub {
+    display: inline-block;
+    width: 32%;
+    font-size: 32px;
+    vertical-align: top;
+}
+
+span.currency {
+    display: block;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: #838c93;
+}
+
+.wallet a {
+    display: block;
+    text-decoration: none;
+    font-size: 32px;
+    color: #838c93;
+    border-top: 2px solid rgba(0,0,0,0.1);
+    margin-top: 20px;
+    padding: 32px;
+}
+
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    color: #838c93;
+    background-color: #838c93;
+    margin-right: 10px;
+    opacity: 0.3;
+}
+
+.dot.active {
+    opacity: 1;
+}
+
+.wallet-actions {
+    display: inline-block;
+    font-size: 32px;
+    margin-top: 60px;
+    width: 100%;
+}
+
+.wallet-actions a {
+    text-decoration: none;
+    color: #838c93;
+    display: block;
+    width: 90%;
+    margin: 20px auto;
+}
+
+.add-wallet {
+    vertical-align: middle;
+    background-image: url(assets/icon_plus_gray.svg);
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.create-wallet {
+    padding: 32px 0;
+    border-top: 2px solid rgba(0,0,0,0.1);
+}
