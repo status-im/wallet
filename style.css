@@ -4,7 +4,8 @@ body {
     overflow-x: hidden;
     margin: 0;
     padding: 0;
-    width: 720px;
+    max-width: 720px;
+    min-width: 320px;
     font-weight: 400;
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
@@ -28,6 +29,10 @@ h2 {
 .wallets {
     background-color: #eef2f5;
     text-align: center;
+}
+
+.wallets h2 {
+    padding: 16px;
 }
 
 .wallet {
@@ -60,7 +65,7 @@ h2 {
     padding-left: 32px;
     color: #838c93;
     text-align: left;
-    font-size: 24px;
+    font-size: 16px;
     opacity: .8;
 }
 
@@ -262,9 +267,6 @@ span.currency {
     display: block;
     padding: 32px 0 0 32px;
     font-weight: 500;
-}
-
-.wallet-transactions > span {
     margin-bottom: 12px;
 }
 
@@ -489,4 +491,234 @@ span.currency {
     background-position: center;
     background-repeat: no-repeat;
     vertical-align: top;
+}
+
+@media only screen and (max-width: 480px) {
+
+    .top-nav {
+        margin-bottom: 16px;
+        padding: 16px;
+    }
+
+    h2 {
+        font-size: 24px;
+        line-height: 48px;
+    }
+
+    div {
+        font-size: 18px;
+    }
+
+    .send-from span {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .send-to, .send-amount, .send-currency {
+        margin-top: 0;
+    }
+
+    .image-qr {
+        width: 24px;
+        height: 24px;
+        background-size: cover;
+    }
+
+    .send-fee {
+        margin-top: 24px;
+    }
+
+    .range-min-text, .range-max-text {
+        font-size: 16px;
+        margin-top: 12px;
+    }
+
+    .note {
+        margin-top: 65px;
+        font-size: 16px;
+    }
+    .button-send {
+        margin-top: 18px;
+        font-size: 24px;
+        padding: 16px 0;
+        vertical-align: middle;
+    }
+
+    .image-send {
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+        background-size: contain;
+    }
+
+    .wallet-image {
+        background-size: contain;
+        width: 24px;
+        height: 24px;
+        left: 15px;
+    }
+
+    .wallet-name {
+        font-size: 22px;
+        margin-left: 20px;
+    }
+
+    .wallet-hash {
+        font-size: 12px;
+        margin-left: 20px;
+    }
+
+    .wallet {
+        margin: 16px;
+    }
+
+    .wallets h2 {
+        padding: 16px;
+    }
+
+    .wallet-currencies {
+        margin-top: 15px;
+    }
+
+    .currency-usd, .currency-rub {
+        font-size: 24px;
+    }
+
+    .wallet a {
+        padding: 18px;
+        font-size: 28px;
+    }
+
+    .wallet-actions {
+        margin-top: 15px;
+        font-size: 28px;
+    }
+
+    .add-wallet {
+        width: 28px;
+        height: 28px;
+        background-size: contain;
+        margin-right: 16px;
+        margin-top: -6px;
+        vertical-align: middle;
+        background-position: center;
+    }
+
+    .wallet-actions a {
+        margin: 16px auto;
+    }
+
+    .create-wallet {
+        padding: 28px 0;
+    }
+
+    .wallet-amount {
+        font-size: 28px;
+        padding: 18px;
+    }
+
+    .wallet-controls .button {
+        padding: 16px 0;
+    }
+
+    .wallet-address {
+        margin: 16px 0;
+    }
+
+    .wallet-address > span {
+        padding: 13px 0 0 16px;
+        font-size: 20px;
+    }
+
+    .wallet-address > p {
+        margin: 0;
+        padding-left: 16px;
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+
+    .button-full {
+        padding: 18px 0;
+    }
+
+    .wallet-transactions {
+        margin: 18px 0;
+    }
+
+    .wallet-transactions > span {
+        margin: 0;
+        padding: 16px 0 0 16px;
+        font-size: 20px;
+    }
+
+    .transaction-action {
+        margin-left: 16px;
+        width: 5%;
+    }
+
+    .action-remove, .action-add {
+        width: 32px;
+        height: 32px;
+        margin-top: -35px;
+    }
+
+    .transaction-details {
+        margin-top: 16px;
+        margin-left: 24px;
+        width: 80%;
+        padding-bottom: 16px;
+    }
+
+    .transaction-name, .transaction-date {
+        font-size: 18px;
+    }
+
+    .transaction-amount {
+        font-size: 24px;
+        top: 10px;
+        right: 2%;
+    }
+}
+
+
+@media only screen and (min-width: 480px) and (max-width: 650px) {
+
+    .wallet-transactions {
+        margin: 18px 0;
+    }
+
+    .wallet-transactions > span {
+        margin: 0;
+        padding: 16px 0 0 16px;
+        font-size: 20px;
+    }
+
+    .transaction-action {
+        margin-left: 16px;
+        width: 5%;
+    }
+
+    .action-remove, .action-add {
+        width: 32px;
+        height: 32px;
+        margin-top: -35px;
+    }
+
+    .transaction-details {
+        margin-top: 16px;
+        margin-left: 24px;
+        width: 80%;
+        padding-bottom: 16px;
+    }
+
+    .transaction-name, .transaction-date {
+        font-size: 18px;
+    }
+
+    .transaction-amount {
+        font-size: 24px;
+        top: 10px;
+        right: 2%;
+    }
+
 }
