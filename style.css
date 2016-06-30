@@ -191,7 +191,6 @@ span.currency {
     border-top: 2px solid rgba(0,0,0,0.1);
     color: #838c93;
     white-space: nowrap;
-    font-size: 32px;
     cursor: pointer;
 }
 
@@ -200,6 +199,7 @@ span.currency {
     padding: 26px 0;
     width: 49%;
     text-align: center;
+    font-size: 32px;
 }
 
 .wallet-controls .button:first-child {
@@ -493,24 +493,23 @@ span.currency {
     vertical-align: top;
 }
 
-@media only screen and (max-width: 480px) {
-
+@media only screen and (max-width: 650px) {
+    
     .top-nav {
         margin-bottom: 16px;
         padding: 16px;
     }
 
     h2 {
-        font-size: 24px;
-        line-height: 48px;
+        font-size: 16px;
     }
 
     div {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .send-from span {
-        font-size: 18px;
+        font-size: 12px;
         line-height: 1.6;
     }
 
@@ -529,25 +528,25 @@ span.currency {
     }
 
     .range-min-text, .range-max-text {
-        font-size: 16px;
+        font-size: 14px;
         margin-top: 12px;
     }
 
     .note {
         margin-top: 65px;
-        font-size: 16px;
+        font-size: 14px;
     }
     .button-send {
         margin-top: 18px;
-        font-size: 24px;
+        font-size: 16px;
         padding: 16px 0;
         vertical-align: middle;
     }
 
     .image-send {
-        width: 24px;
-        height: 24px;
-        vertical-align: middle;
+        width: 16px;
+        height: 16px;
+        vertical-align: baseline;
         background-size: contain;
     }
 
@@ -556,10 +555,11 @@ span.currency {
         width: 24px;
         height: 24px;
         left: 15px;
+        top: 45px;
     }
 
     .wallet-name {
-        font-size: 22px;
+        font-size: 16px;
         margin-left: 20px;
     }
 
@@ -569,7 +569,7 @@ span.currency {
     }
 
     .wallet {
-        margin: 16px;
+        margin: 16px 16px 0;
     }
 
     .wallets h2 {
@@ -579,26 +579,36 @@ span.currency {
     .wallet-currencies {
         margin-top: 15px;
     }
+    
+    span.currency {
+        font-size: 14px;
+    }
+    
+    .pagination .dot {
+        width: 5px;
+        height: 5px;
+        margin-right: 5px;
+    }
 
     .currency-usd, .currency-rub {
-        font-size: 24px;
+        font-size: 16px;
     }
 
     .wallet a {
-        padding: 18px;
-        font-size: 28px;
+        padding: 16px;
+        font-size: 16px;
     }
 
     .wallet-actions {
-        margin-top: 15px;
-        font-size: 28px;
+        margin-top: 0;
+        font-size: 16px;
     }
 
     .add-wallet {
-        width: 28px;
-        height: 28px;
+        width: 16px;
+        height: 16px;
         background-size: contain;
-        margin-right: 16px;
+        margin-right: 8px;
         margin-top: -6px;
         vertical-align: middle;
         background-position: center;
@@ -609,16 +619,17 @@ span.currency {
     }
 
     .create-wallet {
-        padding: 28px 0;
+        padding: 16px 0;
     }
 
     .wallet-amount {
-        font-size: 28px;
-        padding: 18px;
+        font-size: 24px;
+        padding: 16px;
     }
 
     .wallet-controls .button {
         padding: 16px 0;
+        font-size: 16px;
     }
 
     .wallet-address {
@@ -627,18 +638,18 @@ span.currency {
 
     .wallet-address > span {
         padding: 13px 0 0 16px;
-        font-size: 20px;
+        font-size: 14px;
     }
 
     .wallet-address > p {
         margin: 0;
         padding-left: 16px;
-        font-size: 16px;
+        font-size: 14px;
         margin-bottom: 16px;
     }
 
     .button-full {
-        padding: 18px 0;
+        padding: 16px 0;
     }
 
     .wallet-transactions {
@@ -648,7 +659,7 @@ span.currency {
     .wallet-transactions > span {
         margin: 0;
         padding: 16px 0 0 16px;
-        font-size: 20px;
+        font-size: 14px;
     }
 
     .transaction-action {
@@ -657,9 +668,10 @@ span.currency {
     }
 
     .action-remove, .action-add {
-        width: 32px;
-        height: 32px;
-        margin-top: -35px;
+        width: 24px;
+        height: 24px;
+        margin-top: -30px;
+        background-size: contain;
     }
 
     .transaction-details {
@@ -669,56 +681,53 @@ span.currency {
         padding-bottom: 16px;
     }
 
-    .transaction-name, .transaction-date {
-        font-size: 18px;
+    .transaction-name{
+        font-size: 14px;
+    }
+    
+    .transaction-date {
+        font-size: 12px;
     }
 
     .transaction-amount {
-        font-size: 24px;
-        top: 10px;
-        right: 2%;
+        font-size: 16px;
+        top: 8px;
+        right: 0;
+        margin-right: 16px;
     }
-}
-
-
-@media only screen and (min-width: 480px) and (max-width: 650px) {
-
-    .wallet-transactions {
-        margin: 18px 0;
-    }
-
-    .wallet-transactions > span {
-        margin: 0;
-        padding: 16px 0 0 16px;
-        font-size: 20px;
-    }
-
-    .transaction-action {
+    
+    .nav-back {
+        width: 16px;
+        height: 16px;
+        background-size: contain;
+        background-position: 0;
         margin-left: 16px;
-        width: 5%;
+        margin-top: 4px;
+        vertical-align: middle;
     }
-
-    .action-remove, .action-add {
-        width: 32px;
-        height: 32px;
-        margin-top: -35px;
+    
+    .arrow-down {
+        top: 65%;
+        border-top: 5px solid #838c93;
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
     }
-
-    .transaction-details {
-        margin-top: 16px;
-        margin-left: 24px;
-        width: 80%;
-        padding-bottom: 16px;
+    
+    .nav-update {
+        width: 16px;
+        height: 16px;
+        background-image: url(assets/icon_update.svg);
+        background-position: 0;
+        background-repeat: no-repeat;
+        vertical-align: middle;
+        background-size: contain;
+        margin-top: 4px;
     }
-
-    .transaction-name, .transaction-date {
-        font-size: 18px;
+    
+    .button-copy, .button-qr {
+        width: 16px;
+        height: 16px;
+        background-size: contain;
+        vertical-align: baseline;
     }
-
-    .transaction-amount {
-        font-size: 24px;
-        top: 10px;
-        right: 2%;
-    }
-
 }
