@@ -2,14 +2,16 @@ body {
     position: relative;
     display: block;
     overflow-x: hidden;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
-    max-width: 720px;
+    max-width: 768px;
     min-width: 320px;
+    height: 100%;
     font-weight: 400;
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
+    background-color: #eef2f5;
 
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -29,6 +31,7 @@ h2 {
 .wallets {
     background-color: #eef2f5;
     text-align: center;
+    padding-bottom: 30%;
 }
 
 .wallets h2 {
@@ -37,9 +40,13 @@ h2 {
 
 .wallet {
     position: relative;
-    margin: 32px;
     background-color: #fff;
-    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    margin: 32px;
+}
+
+.wallets .wallet {
+    margin: 10% 32px 0;
 }
 
 .wallet-image {
@@ -94,10 +101,18 @@ span.currency {
     display: block;
     margin-top: 20px;
     padding: 32px;
-    border-top: 2px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0,0,0,0.1);
     color: #838c93;
     text-decoration: none;
     font-size: 32px;
+}
+
+.pagination {
+    margin-top: 8px;
+}
+
+.wallets .pagination {
+    padding-bottom: 20%;
 }
 
 .dot {
@@ -117,9 +132,13 @@ span.currency {
 
 .wallet-actions {
     display: inline-block;
-    margin-top: 60px;
     width: 100%;
+    max-width: 768px;
     font-size: 32px;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    background-color: #eef2f5;
 }
 
 .wallet-actions a {
@@ -142,11 +161,10 @@ span.currency {
 
 .create-wallet {
     padding: 32px 0;
-    border-top: 2px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0,0,0,0.1);
 }
 
 .top-nav {
-    margin-bottom: 32px;
     padding: 32px;
     background-color: #eef2f5;
     vertical-align: middle;
@@ -159,7 +177,7 @@ span.currency {
     width: 48px;
     height: 48px;
     background-image: url(assets/icon_back_copy.svg);
-    background-position: center;
+    background-position: left;
     background-repeat: no-repeat;
     vertical-align: middle;
 }
@@ -188,7 +206,7 @@ span.currency {
 }
 
 .wallet-controls {
-    border-top: 2px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0,0,0,0.1);
     color: #838c93;
     white-space: nowrap;
     cursor: pointer;
@@ -203,7 +221,7 @@ span.currency {
 }
 
 .wallet-controls .button:first-child {
-    border-right: 2px solid rgba(0,0,0,0.1);
+    border-right: 1px solid rgba(0,0,0,0.1);
 }
 
 .wallet-screen {
@@ -214,7 +232,7 @@ span.currency {
 .wallet-address {
     margin: 32px 0;
     background-color: #fff;
-    box-shadow: -4px 2px 6px rgba(0,0,0,0.2);
+    box-shadow: -2px 2px 4px rgba(0,0,0,0.2);
     color: #838c93;
     text-align: left;
     font-size: 28px;
@@ -256,7 +274,7 @@ span.currency {
 }
 
 .wallet-transactions {
-    margin: 32px 0;
+    margin: 24px 0;
     background-color: #fff;
     color: #838c93;
     text-align: left;
@@ -298,7 +316,7 @@ span.currency {
     margin-top: 32px;
     padding-bottom: 32px;
     width: 84%;
-    border-bottom: 2px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .transaction-name {
@@ -329,12 +347,12 @@ span.currency {
 .button-full {
     padding: 26px 0;
     width: 100%;
-    border-top: 2px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0,0,0,0.1);
     text-align: center;
 }
 
 .send-screen {
-    margin-left: 32px;
+    padding-left: 32px;
     background-color: #fff;
     color: #838c93;
     text-align: left;
@@ -344,6 +362,7 @@ span.currency {
 .send-from {
     border-bottom: 2px solid rgba(0,0,0,0.1);
     line-height: 1.2;
+    padding-top: 40px;
 }
 
 .send-from span {
@@ -469,10 +488,10 @@ span.currency {
     padding-right: 32px;
     text-align: center;
     font-size: 28px;
+    padding-bottom: 50%;
 }
 
 .button-send {
-    margin-top: 216px;
     padding: 28px 0;
     width: 100%;
     background-color: #7099e6;
@@ -480,6 +499,9 @@ span.currency {
     color: #fff;
     text-align: center;
     font-size: 32px;
+    position: fixed;
+    bottom: 0;
+    max-width: 768px;
 }
 
 .image-send {
@@ -493,11 +515,22 @@ span.currency {
     vertical-align: top;
 }
 
+@media only screen and (min-width: 768px) {
+    .wallets .wallet {
+        margin: 20% 32px 0;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .wallets .wallet {
+        margin: 2% 32px 0;
+    }
+}
+
 @media only screen and (max-width: 650px) {
     
     .top-nav {
-        margin-bottom: 16px;
-        padding: 16px;
+        padding: 18px;
     }
 
     h2 {
@@ -506,6 +539,10 @@ span.currency {
 
     div {
         font-size: 16px;
+    }
+    
+    .send-from {
+        padding-top: 20px;
     }
 
     .send-from span {
@@ -530,11 +567,13 @@ span.currency {
     .range-min-text, .range-max-text {
         font-size: 14px;
         margin-top: 12px;
+        margin-right: 16px;
     }
 
     .note {
         margin-top: 65px;
         font-size: 14px;
+        padding-right: 16px;
     }
     .button-send {
         margin-top: 18px;
@@ -568,8 +607,12 @@ span.currency {
         margin-left: 20px;
     }
 
+    .wallets .wallet {
+        margin: 30% 16px 0;
+    }
+    
     .wallet {
-        margin: 16px 16px 0;
+        margin: 16px 32px 0 16px;
     }
 
     .wallets h2 {
@@ -653,7 +696,8 @@ span.currency {
     }
 
     .wallet-transactions {
-        margin: 18px 0;
+        margin: 0;
+        padding-bottom: 24px;
     }
 
     .wallet-transactions > span {
@@ -701,7 +745,7 @@ span.currency {
         height: 16px;
         background-size: contain;
         background-position: 0;
-        margin-left: 16px;
+        margin-left: 0;
         margin-top: 4px;
         vertical-align: middle;
     }
@@ -729,5 +773,32 @@ span.currency {
         height: 16px;
         background-size: contain;
         vertical-align: baseline;
+    }
+    
+    .send-range, .bar {
+        height: 2px;
+        margin-right: 16px;
+    }
+    
+    .range-control {
+        width: 12px;
+        height: 12px;
+        top: -5px;
+    }
+    
+    .scan-qr {
+        margin-right: 16px;
+    }
+    
+    .send-from, .send-to, .send-amount, .send-currency {
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .send-screen {
+        padding-left: 16px;
+    }
+    
+    .fee-amount {
+        margin-right: 16px;
     }
 }
