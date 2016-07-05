@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+/*.log
+/target
+/*-init.clj
+/resources/public/js/compiled
+out
+.idea
+*.iml
+.nrepl-port
