@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>1DE6E4BC-5592-4BFC-9956-37873F2C421B</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="account_list" transform="translate(-652.000000, -44.000000)">
+            <g id="row">
+                <g id="icon_close_gray" transform="translate(640.000000, 32.000000)">
+                    <polygon id="Shape" points="0 0 48 0 48 48 0 48"></polygon>
+                    <path d="M24,26.8519129 L32.5544956,35.4064085 C33.3476708,36.1995836 34.6201175,36.1951854 35.4076515,35.4076515 C36.200676,34.6146269 36.194629,33.3427161 35.4064085,32.5544956 L26.8519129,24 L35.4064085,15.4455044 C36.1995836,14.6523292 36.1951854,13.3798825 35.4076515,12.5923485 C34.6146269,11.799324 33.3427161,11.805371 32.5544956,12.5935915 L24,21.1480871 L15.4455044,12.5935915 C14.6523292,11.8004164 13.3798825,11.8048146 12.5923485,12.5923485 C11.799324,13.3853731 11.805371,14.6572839 12.5935915,15.4455044 L21.1480871,24 L12.5935915,32.5544956 C11.8004164,33.3476708 11.8048146,34.6201175 12.5923485,35.4076515 C13.3853731,36.200676 14.6572839,36.194629 15.4455044,35.4064085 L24,26.8519129 L24,26.8519129 Z" id="Combined-Shape" fill="#838C93"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

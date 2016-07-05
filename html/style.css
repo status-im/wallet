@@ -200,6 +200,10 @@ span.currency {
     font-size: 48px;
 }
 
+.wallet-amount p {
+    display: inline;
+}
+
 .wallet-amount span {
     float: right;
     color: #939ba1;
