@@ -16,7 +16,7 @@
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"
                                     "test/js"]
 
-  :figwheel {:css-dirs ["resources/public/css"]
+  :figwheel {:css-dirs         ["resources/public/css"]
              :nrepl-middleware ["cemerick.piggieback/wrap-cljs-repl"]}
 
   :profiles
@@ -37,6 +37,8 @@
                     :output-to            "resources/public/js/compiled/app.js"
                     :output-dir           "resources/public/js/compiled/out"
                     :asset-path           "js/compiled/out"
+                    :foreign-libs         [{:file     "resources/js/react-slick.js"
+                                            :provides ["react-slick"]}]
                     :source-map-timestamp true}}
 
     {:id           "min"
@@ -45,9 +47,13 @@
                     :output-to       "resources/public/js/compiled/app.js"
                     :optimizations   :advanced
                     :closure-defines {goog.DEBUG false}
+                    :foreign-libs    [{:file     "resources/js/react-slick.min.js"
+                                       :provides ["react-slick"]}]
                     :pretty-print    false}}
     {:id           "test"
      :source-paths ["src/cljs" "test/cljs"]
      :compiler     {:output-to     "resources/public/js/compiled/test.js"
+                    :foreign-libs  [{:file     "resources/js/react-slick.js"
+                                     :provides ["react-slick"]}]
                     :main          token.runner
                     :optimizations :none}}]})
