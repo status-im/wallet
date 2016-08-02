@@ -6,8 +6,8 @@
             [token.subs]
             [token.routes :as routes]
             [token.views :as views]
-            [token.config :as config]))
-
+            [token.config :as config]
+            [token.ethereum]))
 
 (defn dev-setup []
   (when config/debug?
@@ -21,5 +21,6 @@
 (defn ^:export init []
   (routes/app-routes)
   (re-frame/dispatch-sync [:initialize-db])
+  (re-frame/dispatch [:initialize-wallet])
   (dev-setup)
   (mount-root))

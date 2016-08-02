@@ -6,8 +6,13 @@
             [goog.history.EventType :as EventType]
             [re-frame.core :as re-frame]))
 
+(defonce history (History.))
+
+(defn nav! [token]
+  (.setToken history (secretary/locate-route-value token)))
+
 (defn hook-browser-navigation! []
-  (doto (History.)
+  (doto history
     (events/listen
       EventType/NAVIGATE
       (fn [event]
@@ -16,18 +21,14 @@
 
 (defn app-routes []
   (secretary/set-config! :prefix "#")
-  ;; --------------------
-  ;; define routes here
+
   (defroute "/" []
             (re-frame/dispatch [:set-active-panel :wallets-panel]))
 
-  (defroute "/wallet" []
-            (re-frame/dispatch [:set-active-panel :wallet-panel]))
-
-  (defroute "/wallet-state" []
-            (re-frame/dispatch [:set-active-panel :wallet-state-panel]))
+  (defroute "/wallet/:wallet-id" [wallet-id]
+            (re-frame/dispatch [:set-active-panel :wallet-panel wallet-id]))
 
   (defroute "/transaction" []
             (re-frame/dispatch [:set-active-panel :transaction-panel]))
-  ;; --------------------
+
   (hook-browser-navigation!))

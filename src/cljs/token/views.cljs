@@ -1,19 +1,18 @@
 (ns token.views
   (:require [re-frame.core :as re-frame]
             [token.wallets.page :refer [wallets]]
-            [token.wallet.page :refer [wallet wallet-state]]
+            [token.wallet.page :refer [wallet]]
             [token.transaction.page :refer [transaction]]))
 
 (defmulti panels identity)
 (defmethod panels :wallets-panel [] [wallets])
-(defmethod panels :wallet-panel [] [wallet])
-(defmethod panels :wallet-state-panel [] [wallet-state])
+(defmethod panels :wallet-panel [_ wallet-id] [wallet wallet-id])
 (defmethod panels :transaction-panel [] [transaction])
 (defmethod panels :default [] [:div])
 
 (defn show-panel
-  [panel-name]
-  [panels panel-name])
+  [[panel-name params]]
+  [panels panel-name params])
 
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [:active-panel])]

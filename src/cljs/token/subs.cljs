@@ -11,3 +11,8 @@
   :active-panel
   (fn [db _]
     (reaction (:active-panel @db))))
+
+(re-frame/register-sub
+  :get-in
+  (fn [db [_ path]]
+    (reaction (get-in @db path))))
