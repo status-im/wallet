@@ -38,15 +38,24 @@ h2 {
     padding: 16px;
 }
 
+.wallets .wallet {
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.wallets .wallet:nth-child(1) {
+    margin-left: 0px;
+}
+
 .wallet {
     position: relative;
     background-color: #fff;
-    box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     margin: 32px;
 }
 
-.wallets .wallet {
-    margin: 10% 32px 0;
+.wallets .slick-slider {
+    margin: 10% 0px 0;
 }
 
 .wallet-image {
@@ -83,6 +92,19 @@ h2 {
     text-align: center;
 }
 
+.slick-slider .slick-dots li button:before {
+    font-size: 12px;
+}
+
+.slick-slider .slick-dots li button:before {
+    color: #838c93;
+    opacity: 0.3;
+}
+
+.slick-slider .slick-dots li.slick-active button:before {
+    opacity: 1;
+}
+
 .currency-usd, .currency-rub {
     display: inline-block;
     width: 32%;
@@ -101,7 +123,7 @@ span.currency {
     display: block;
     margin-top: 20px;
     padding: 32px;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
     color: #838c93;
     text-decoration: none;
     font-size: 32px;
@@ -113,21 +135,6 @@ span.currency {
 
 .wallets .pagination {
     padding-bottom: 20%;
-}
-
-.dot {
-    display: inline-block;
-    margin-right: 10px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #838c93;
-    color: #838c93;
-    opacity: 0.3;
-}
-
-.dot.active {
-    opacity: 1;
 }
 
 .wallet-actions {
@@ -161,7 +168,7 @@ span.currency {
 
 .create-wallet {
     padding: 32px 0;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .top-nav {
@@ -210,7 +217,7 @@ span.currency {
 }
 
 .wallet-controls {
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
     color: #838c93;
     white-space: nowrap;
     cursor: pointer;
@@ -225,7 +232,7 @@ span.currency {
 }
 
 .wallet-controls .button:first-child {
-    border-right: 1px solid rgba(0,0,0,0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .wallet-screen {
@@ -236,10 +243,11 @@ span.currency {
 .wallet-address {
     margin: 32px 0;
     background-color: #fff;
-    box-shadow: -2px 2px 4px rgba(0,0,0,0.2);
+    box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.2);
     color: #838c93;
     text-align: left;
     font-size: 28px;
+    overflow: hidden;
 }
 
 .wallet-address > span {
@@ -320,7 +328,7 @@ span.currency {
     margin-top: 32px;
     padding-bottom: 32px;
     width: 84%;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .transaction-name {
@@ -351,7 +359,7 @@ span.currency {
 .button-full {
     padding: 26px 0;
     width: 100%;
-    border-top: 1px solid rgba(0,0,0,0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
@@ -364,7 +372,7 @@ span.currency {
 }
 
 .send-from {
-    border-bottom: 2px solid rgba(0,0,0,0.1);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
     line-height: 1.2;
     padding-top: 40px;
 }
@@ -383,7 +391,7 @@ span.currency {
 .send-to {
     margin-top: 38px;
     padding: 32px 0 6px;
-    border-bottom: 2px solid rgba(0,0,0,0.1);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .scan-qr {
@@ -408,7 +416,7 @@ span.currency {
     margin-top: 38px;
     padding: 32px 0 4px;
     width: 35%;
-    border-bottom: 2px solid rgba(0,0,0,0.1);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .send-currency {
@@ -418,7 +426,7 @@ span.currency {
     margin-left: 32px;
     padding: 32px 0 4px;
     width: 35%;
-    border-bottom: 2px solid rgba(0,0,0,0.1);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .send-fee {
@@ -439,8 +447,8 @@ span.currency {
     position: absolute;
     top: 60%;
     left: 77%;
-    width: 0; 
-    height: 0; 
+    width: 0;
+    height: 0;
     border-top: 10px solid #838c93;
     border-right: 10px solid transparent;
     border-left: 10px solid transparent;
@@ -451,7 +459,7 @@ span.currency {
     margin-top: 32px;
     margin-right: 32px;
     height: 4px;
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .bar {
@@ -499,7 +507,7 @@ span.currency {
     padding: 28px 0;
     width: 100%;
     background-color: #7099e6;
-    box-shadow: -4px 2px 6px rgba(0,0,0,0.2);
+    box-shadow: -4px 2px 6px rgba(0, 0, 0, 0.2);
     color: #fff;
     text-align: center;
     font-size: 32px;
@@ -520,19 +528,34 @@ span.currency {
 }
 
 @media only screen and (min-width: 768px) {
-    .wallets .wallet {
+    .wallets .slick-slider {
         margin: 20% 32px 0;
     }
+
+    .wallets .wallet {
+        width: 636px;
+    }
+
 }
 
 @media only screen and (min-width: 1000px) {
-    .wallets .wallet {
+    .wallets .slick-slider {
         margin: 2% 32px 0;
     }
 }
 
+@media only screen and (max-width: 768px) {
+    .wallets .wallet {
+        width: 596px;
+    }
+}
+
 @media only screen and (max-width: 650px) {
-    
+
+    .wallets .wallet {
+        width: 510px;
+    }
+
     .top-nav {
         padding: 18px;
     }
@@ -544,7 +567,7 @@ span.currency {
     div {
         font-size: 16px;
     }
-    
+
     .send-from {
         padding-top: 20px;
     }
@@ -579,6 +602,7 @@ span.currency {
         font-size: 14px;
         padding-right: 16px;
     }
+
     .button-send {
         margin-top: 18px;
         font-size: 16px;
@@ -611,12 +635,8 @@ span.currency {
         margin-left: 20px;
     }
 
-    .wallets .wallet {
-        margin: 30% 16px 0;
-    }
-    
-    .wallet {
-        margin: 16px 32px 0 16px;
+    .wallets .slick-slider {
+        margin: 30% 0 0;
     }
 
     .wallets h2 {
@@ -626,15 +646,17 @@ span.currency {
     .wallet-currencies {
         margin-top: 15px;
     }
-    
+
     span.currency {
         font-size: 14px;
     }
-    
-    .pagination .dot {
+
+    .slick-slider .slick-dots li {
         width: 5px;
-        height: 5px;
-        margin-right: 5px;
+    }
+
+    .slick-slider .slick-dots li button:before {
+        font-size: 7px;
     }
 
     .currency-usd, .currency-rub {
@@ -729,10 +751,10 @@ span.currency {
         padding-bottom: 16px;
     }
 
-    .transaction-name{
+    .transaction-name {
         font-size: 14px;
     }
-    
+
     .transaction-date {
         font-size: 12px;
     }
@@ -743,7 +765,7 @@ span.currency {
         right: 0;
         margin-right: 16px;
     }
-    
+
     .nav-back {
         width: 16px;
         height: 16px;
@@ -753,14 +775,14 @@ span.currency {
         margin-top: 4px;
         vertical-align: middle;
     }
-    
+
     .arrow-down {
         top: 65%;
         border-top: 5px solid #838c93;
         border-right: 5px solid transparent;
         border-left: 5px solid transparent;
     }
-    
+
     .nav-update {
         width: 16px;
         height: 16px;
@@ -771,38 +793,62 @@ span.currency {
         background-size: contain;
         margin-top: 4px;
     }
-    
+
     .button-copy, .button-qr {
         width: 16px;
         height: 16px;
         background-size: contain;
         vertical-align: baseline;
     }
-    
+
     .send-range, .bar {
         height: 2px;
         margin-right: 16px;
     }
-    
+
     .range-control {
         width: 12px;
         height: 12px;
         top: -5px;
     }
-    
+
     .scan-qr {
         margin-right: 16px;
     }
-    
+
     .send-from, .send-to, .send-amount, .send-currency {
-        border-bottom: 1px solid rgba(0,0,0,0.1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     }
-    
+
     .send-screen {
         padding-left: 16px;
     }
-    
+
     .fee-amount {
         margin-right: 16px;
+    }
+}
+
+@media only screen and (max-width: 567px) {
+    .wallets .wallet {
+        width: 370px;
+    }
+}
+
+@media only screen and (max-width: 414px) {
+    .wallets .wallet {
+        width: 310px;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    .wallets .wallet {
+        width: 272px;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .wallets .wallet {
+        width: 262px;
     }
 }

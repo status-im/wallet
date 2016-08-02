@@ -5,7 +5,9 @@
                  [binaryage/devtools "0.6.1"]
                  [re-frame "0.7.0"]
                  [secretary "1.2.3"]
-                 [hickory "0.6.0"]]
+                 [hickory "0.6.0"]
+                 [cljsjs/web3 "0.16.0-0"]
+                 [cljsjs/clipboard "1.5.9-0"]]
 
   :plugins [[lein-cljsbuild "1.1.3"]]
 
