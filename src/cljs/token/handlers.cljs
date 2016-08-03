@@ -1,7 +1,7 @@
 (ns token.handlers
   (:require [re-frame.core :as re-frame]
             [token.db :as db]
-            [token.ethereum :refer [connect accounts balance transactions]]))
+            [token.ethereum :refer [connect accounts balance transactions wei->ether]]))
 
 (re-frame/register-handler
   :initialize-db
@@ -33,10 +33,20 @@
   :get-balance
   (fn get-balance
     [db [_ account]]
-    (let [web3    (get-in db [:eth :web3])
-          balance (balance web3 account)]
-      (assoc-in db (db/wallet-balance-path account) balance))))
+    (let [web3 (get-in db [:eth :web3])]
+      (balance web3 account
+               (fn [error result]
+                 (when error
+                   (println (str "error: " error)))
+                 (re-frame/dispatch
+                   [:set-balance account (wei->ether web3 result)])))
+      db)))
 
+(re-frame/register-handler
+  :set-balance
+  (fn set-balance
+    [db [_ account balance]]
+    (assoc-in db (db/wallet-balance-path account) balance)))
 
 (re-frame/register-handler
   :get-transactions

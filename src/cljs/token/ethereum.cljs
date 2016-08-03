@@ -14,8 +14,8 @@
   (.toString (.fromWei web3 wei "ether")))
 
 (defn balance
-  [web3 account]
-  (wei->ether web3 (.eth.getBalance web3 account)))
+  [web3 account callback]
+  (.eth.getBalance web3 account callback))
 
 (defn accounts
   [web3 callback]
