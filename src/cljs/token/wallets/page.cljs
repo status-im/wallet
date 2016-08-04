@@ -19,7 +19,9 @@
        [:div.wallet-name "Another wallet"]
        [:div.wallet-hash (account-name wallet-id)]
        [:div.wallet-currencies
-        [:div.currency-usd [:span.currency "ETH"] (.toFixed (js/parseFloat @balance) 4)]]
+        [:div.currency-usd [:span.currency "ETH"]
+         (when-let [balance @balance]
+           (.toFixed (js/parseFloat balance) 4))]]
        (wallet-uri wallet-id)])))
 
 (defn wallets []
