@@ -19,7 +19,8 @@
                                     "test/js"]
 
   :figwheel {:css-dirs         ["resources/public/css"]
-             :nrepl-middleware ["cemerick.piggieback/wrap-cljs-repl"]}
+             :nrepl-middleware ["cemerick.piggieback/wrap-cljs-repl"]
+             :server-port      3450}
 
   :profiles
   {:dev
