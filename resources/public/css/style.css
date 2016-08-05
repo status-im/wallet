@@ -133,8 +133,9 @@ span.currency {
     margin-top: 8px;
 }
 
-.wallets .pagination {
-    padding-bottom: 20%;
+.wallets .slick-dots {
+    bottom: 0;
+    margin: 0;
 }
 
 .wallet-actions {
