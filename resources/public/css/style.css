@@ -31,6 +31,7 @@ h2 {
 .wallets {
     background-color: #eef2f5;
     text-align: center;
+    padding-top: 15vh;
     padding-bottom: 30%;
 }
 
@@ -52,10 +53,6 @@ h2 {
     background-color: #fff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
     margin: 32px;
-}
-
-.wallets .slick-slider {
-    margin: 10% 0px 0;
 }
 
 .wallet-image {
@@ -529,20 +526,11 @@ span.currency {
 }
 
 @media only screen and (min-width: 768px) {
-    .wallets .slick-slider {
-        margin: 20% 32px 0;
-    }
 
     .wallets .wallet {
         width: 636px;
     }
 
-}
-
-@media only screen and (min-width: 1000px) {
-    .wallets .slick-slider {
-        margin: 2% 32px 0;
-    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -634,10 +622,6 @@ span.currency {
     .wallet-hash {
         font-size: 12px;
         margin-left: 20px;
-    }
-
-    .wallets .slick-slider {
-        margin: 30% 0 0;
     }
 
     .wallets h2 {
