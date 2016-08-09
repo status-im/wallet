@@ -76,11 +76,9 @@
        (map (partial transaction wallet-id) @transactions))]))
 
 (defn wallet [wallet-id]
-  ;; todo: uses wallet id with non-empty transactions list
-  (let [test-wallet-id "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae"]
-    (dispatch [:get-transactions test-wallet-id])
-    [:div.wallet-screen
-     [nav]
-     [wallet-info wallet-id]
-     [address wallet-id]
-     [transactions test-wallet-id]]))
+  (dispatch [:get-transactions wallet-id])
+  [:div.wallet-screen
+   [nav]
+   [wallet-info wallet-id]
+   [address wallet-id]
+   [transactions wallet-id]])
