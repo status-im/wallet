@@ -32,12 +32,6 @@
        "Send"]
       [:div.button "Receive"]]]))
 
-(defn pagination []
-  [:div.pagination
-   [:div.dot.active]
-   [:div.dot]
-   [:div.dot]])
-
 (defn address [wallet-id]
   [:div.wallet-address
    [:span "Address"]
@@ -56,9 +50,10 @@
 
 (defn transaction [wallet-id tx]
   (let [web3         (subscribe [:get-in [:eth :web3]])
-        sender       (.-sender tx)
-        recipient    (.-recipient tx)
-        amount       (.-amount tx)
+        sender       (.-from tx)
+        recipient    (.-to tx)
+        amount       (.-value tx)
+        timestamp    (* 1000 (.-timeStamp tx))
         incoming?    (= recipient wallet-id)
         action-class {:class (if incoming? "action-add" "action-remove")}
         amount-class {:class (if incoming? "green" "red")}
@@ -68,7 +63,7 @@
      [:div.transaction-action [:div action-class]]
      [:div.transaction-details
       [:div.transaction-name (account-name (if incoming? sender recipient))]
-      [:div.transaction-date (format-date "d MMM 'at' hh:mm" (.-time tx))]
+      [:div.transaction-date (format-date "d MMM 'at' hh:mm" timestamp)]
       [:div.transaction-amount
        [:span amount-class
         (str sign (wei->ether @web3 amount) " ETH")]]]]))
@@ -81,11 +76,9 @@
        (map (partial transaction wallet-id) @transactions))]))
 
 (defn wallet [wallet-id]
-  ;; todo: uses wallet id with non-empty transactions list
-  (let [test-wallet-id "0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae"]
-    (dispatch [:get-transactions test-wallet-id])
-    [:div.wallet-screen
-     [nav]
-     [wallet-info wallet-id]
-     [address wallet-id]
-     [transactions test-wallet-id]]))
+  (dispatch [:get-transactions wallet-id])
+  [:div.wallet-screen
+   [nav]
+   [wallet-info wallet-id]
+   [address wallet-id]
+   [transactions wallet-id]])

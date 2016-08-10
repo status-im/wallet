@@ -23,10 +23,12 @@
 
 (defn transactions
   [account callback]
-  (let [api-url (str "https://etherchain.org/api/account/" account "/tx/0")
+  (let [api-url (str "http://testnet.etherscan.io/api?module=account&action=txlist&address="
+                     account
+                     "&startblock=0&endblock=99999999&sort=asc&apikey=YourApiKeyToken")
         xhr     (net/xhr-connection)]
     (event/listen xhr :error #(.log js/console "Error" %1))
     (event/listen xhr :success (fn [ev]
-                                 (let [response (.-data (.getResponseJson (.-target ev)))]
+                                 (let [response (.-result (.getResponseJson (.-target ev)))]
                                    (callback response))))
     (net/transmit xhr api-url "GET" {:q "json"})))
