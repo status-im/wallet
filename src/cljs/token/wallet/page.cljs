@@ -1,6 +1,5 @@
 (ns token.wallet.page
   (:require [re-frame.core :refer [subscribe dispatch]]
-            [token.routes :as routes]
             [token.ethereum :refer [wei->ether]]
             [token.components.clipboard :refer [clipboard-button]]
             [goog.i18n.DateTimeFormat]
@@ -28,7 +27,9 @@
      [:div.wallet-controls
       [:div.button
        {:on-click (fn [_]
-                    (routes/nav! "/transaction"))}
+                    (.dispatch (.-statusAPI js/window) (name :webview-send-transaction)
+                               (clj->js {:callback (fn [params]
+                                                     (println (str "callback " (.stringify js/JSON params))))})))}
        "Send"]
       [:div.button "Receive"]]]))
 
