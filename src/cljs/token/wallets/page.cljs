@@ -1,5 +1,6 @@
 (ns token.wallets.page
   (:require [re-frame.core :refer [subscribe dispatch]]
+            [token.ethereum :refer [to-fixed unit->wei format-wei]]
             [reagent.core :as r]
             [token.components.slick :as s]
             [re-frame.core :as re-frame]
@@ -12,17 +13,17 @@
   (str (.substring account 0 20) "..."))
 
 (defn wallet [wallet-id]
-  (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])]
+  (let [balance     (subscribe [:get-in (db/wallet-balance-path wallet-id)])]
     (fn [wallet-id]
-      [:div.wallet
-       [:div.wallet-image]
-       [:div.wallet-name "Another wallet"]
-       [:div.wallet-hash (account-name wallet-id)]
-       [:div.wallet-currencies
-        [:div.currency-usd [:span.currency "ETH"]
-         (when-let [balance @balance]
-           (.toFixed (js/parseFloat balance) 4))]]
-       (wallet-uri wallet-id)])))
+      (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
+        [:div.wallet
+         [:div.wallet-image]
+         [:div.wallet-name "Another wallet"]
+         [:div.wallet-hash (account-name wallet-id)]
+         [:div.wallet-currencies
+          [:div.currency-usd [:span.currency (:unit balance-fmt)]
+           (to-fixed (:amount balance-fmt) 6)]]
+         (wallet-uri wallet-id)]))))
 
 (defn wallets []
   (let [accounts (subscribe [:get-in db/wallet-accounts-path])]

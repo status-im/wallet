@@ -1,6 +1,6 @@
 (ns token.wallet.page
   (:require [re-frame.core :refer [subscribe dispatch]]
-            [token.ethereum :refer [wei->ether]]
+            [token.ethereum :refer [to-fixed unit->wei format-wei]]
             [token.components.clipboard :refer [clipboard-button]]
             [goog.i18n.DateTimeFormat]
             [re-frame.core :as re-frame]
@@ -20,18 +20,20 @@
 
 (defn wallet-info [wallet-id]
   (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])]
-    [:div.wallet
-     [:div.wallet-amount
-      [:p @balance]
-      [:span "ETH"]]
-     [:div.wallet-controls
-      [:div.button
-       {:on-click (fn [_]
-                    (.dispatch (.-statusAPI js/window) (name :webview-send-transaction)
-                               (clj->js {:callback (fn [params]
-                                                     (println (str "callback " (.stringify js/JSON params))))})))}
-       "Send"]
-      [:div.button "Receive"]]]))
+    (fn [wallet-id]
+      (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
+        [:div.wallet
+         [:div.wallet-amount
+          [:p (to-fixed (:amount balance-fmt) 6)]
+          [:span (:unit balance-fmt)]]
+         [:div.wallet-controls
+          [:div.button
+           {:on-click (fn [_]
+                        (.dispatch (.-statusAPI js/window) (name :webview-send-transaction)
+                                   (clj->js {:callback (fn [params]
+                                                         (println (str "callback " (.stringify js/JSON params))))})))}
+           "Send"]
+          [:div.button "Receive"]]]))))
 
 (defn address [wallet-id]
   [:div.wallet-address
@@ -50,10 +52,10 @@
   (str (.substring account 0 20) "..."))
 
 (defn transaction [wallet-id tx]
-  (let [web3         (subscribe [:get-in [:eth :web3]])
-        sender       (.-from tx)
+  (let [sender       (.-from tx)
         recipient    (.-to tx)
         amount       (.-value tx)
+        amount-fmt   (format-wei amount)
         timestamp    (* 1000 (.-timeStamp tx))
         incoming?    (= recipient wallet-id)
         action-class {:class (if incoming? "action-add" "action-remove")}
@@ -67,7 +69,7 @@
       [:div.transaction-date (format-date "d MMM 'at' hh:mm" timestamp)]
       [:div.transaction-amount
        [:span amount-class
-        (str sign (wei->ether @web3 amount) " ETH")]]]]))
+        (str sign (:amount amount-fmt) " " (:unit amount-fmt))]]]]))
 
 (defn transactions [wallet-id]
   (let [transactions (subscribe [:get-in (db/wallet-transactions-path wallet-id)])]

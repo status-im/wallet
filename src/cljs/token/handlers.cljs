@@ -39,7 +39,7 @@
                  (when error
                    (println (str "error: " error)))
                  (re-frame/dispatch
-                   [:set-balance account (wei->ether web3 result)])))
+                   [:set-balance account (wei->ether result)])))
       db)))
 
 (re-frame/register-handler
