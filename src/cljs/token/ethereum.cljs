@@ -9,9 +9,46 @@
   (->> (js/Web3.providers.HttpProvider. rpc-url)
        (js/Web3.)))
 
+(defn to-fixed
+  [amount precision]
+  (.toFixed (js/parseFloat amount) precision))
+
+(defn wei->unit
+  [wei unit]
+  (.toString (.fromWei js/Web3.prototype wei unit)))
+
+(defn unit->wei
+  [amount unit]
+  (.toString (.toWei js/Web3.prototype amount unit)))
+
 (defn wei->ether
-  [web3 wei]
-  (.toString (.fromWei web3 wei "ether")))
+  [wei]
+  (wei->unit wei "ether"))
+
+(defn format-unit
+  [unit]
+  (case unit
+    "ether" "ETH"
+    "wei"   "WEI"
+    unit))
+
+(defn format-wei-unit
+  [wei]
+  (let [tens (count (str wei))]
+    (cond 
+      (> tens 18) "ether"
+      (> tens 15) "finney"
+      (> tens 12) "szabo"
+      (> tens 9)  "Gwei"
+      (> tens 6)  "Mwei"
+      (> tens 3)  "Kwei"
+      :else       "wei")))
+
+(defn format-wei
+  [wei]
+  (let [unit (format-wei-unit wei)]
+    {:amount (wei->unit wei unit)
+     :unit (format-unit unit)}))
 
 (defn balance
   [web3 account callback]
