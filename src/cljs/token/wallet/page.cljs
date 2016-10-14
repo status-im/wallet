@@ -38,11 +38,7 @@
 (defn address [wallet-id]
   [:div.wallet-address
    [:span "Address"]
-   [:p wallet-id]
-   [:div.wallet-controls
-    [clipboard-button "Copy" wallet-id]
-    [:div.button [:span.button-qr] "Show QR"]
-    [:div.button-full "Backup or restore your account"]]])
+   [:p wallet-id]])
 
 (defn format-date [date-format date]
   (.format (goog.i18n.DateTimeFormat. date-format)
