@@ -1,12 +1,14 @@
-# token
+# Wallet
 
-A [re-frame](https://github.com/Day8/re-frame) application designed to ... well, that part is up to you.
+The Default Wallet DApp for Status using [re-frame](https://github.com/Day8/re-frame).
 
 ## Development Mode
 
 ### Run application:
 
 ```
+git clone git@github.com:status-im/wallet.git && cd wallet
+adb reverse tcp:3450 tcp:3450
 lein clean
 lein figwheel dev
 ```
