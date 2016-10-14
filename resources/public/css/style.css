@@ -135,7 +135,8 @@ span.currency {
 }
 
 .wallet-actions {
-    display: inline-block;
+    /* display: inline-block;*/
+    display:none;
     width: 100%;
     max-width: 768px;
     font-size: 32px;
