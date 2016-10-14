@@ -75,8 +75,10 @@
   (let [transactions (subscribe [:get-in (db/wallet-transactions-path wallet-id)])]
     [:div.wallet-transactions
      [:span "Transactions"]
-     (doall
-       (map (partial transaction wallet-id) @transactions))]))
+     (if (empty? @transactions)
+       [:div.no-transactions "No transactions found"]
+       (doall
+         (map (partial transaction wallet-id) @transactions)))]))
 
 (defn wallet [wallet-id]
   (dispatch [:get-transactions wallet-id])

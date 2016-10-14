@@ -525,6 +525,10 @@ span.currency {
     vertical-align: top;
 }
 
+.no-transactions {
+    text-align: center;
+}
+
 @media only screen and (min-width: 768px) {
 
     .wallets .wallet {
