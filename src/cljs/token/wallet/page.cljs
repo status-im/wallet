@@ -2,8 +2,10 @@
   (:require [re-frame.core :refer [subscribe dispatch]]
             [token.ethereum :refer [to-fixed unit->wei format-wei]]
             [token.components.clipboard :refer [clipboard-button]]
+            [secretary.core :as secretary :refer [dispatch!]]
             [goog.i18n.DateTimeFormat]
             [re-frame.core :as re-frame]
+            [token.status :as status]
             [token.db :as db]))
 
 (defn nav []
@@ -21,7 +23,8 @@
         (re-frame/dispatch [:initialize-wallet]))}]]])
 
 (defn wallet-info [wallet-id]
-  (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])]
+  (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])
+        text (subscribe [:get :text])]
     (fn [wallet-id]
       (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
         [:div.wallet-container
@@ -32,11 +35,18 @@
           [:div.wallet-controls
            [:div.button.wallet-btn
             {:on-click (fn [_]
-                         (.dispatch (.-statusAPI js/window) (name :webview-send-transaction)
-                                    (clj->js {:callback (fn [params]
-                                                          (println (str "callback " (.stringify js/JSON params))))})))}
+                         (dispatch [:set :text "Sent !"])
+                         (status/send-message :webview-send-transaction
+                                              (fn [params]
+                                                (println (str "callback " (.stringify js/JSON params)))
+                                                (dispatch! "/transaction"))))}
             "Send"]
            [:div.button.wallet-btn
+            {:on-click (fn [_]
+                         (dispatch [:set :text "Receive !"])
+                         (status/send-message :webview-receive-transaction
+                                              (fn [params]
+                                                (println (str "callback " (.stringify js/JSON params))))))}
             "Receive"]]]]))))
 
 (defn address [wallet-id]

@@ -490,6 +490,15 @@ span.currency {
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
+input:focus{
+    outline: none;
+}
+
+.send-amount-input {
+    width: 80%;
+    border: 0;
+}
+
 .send-currency {
     position: relative;
     display: inline-block;
@@ -498,6 +507,10 @@ span.currency {
     padding: 32px 0 4px;
     width: 35%;
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.transaction-fee {
+    display: none
 }
 
 .send-fee {
