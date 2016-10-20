@@ -7,10 +7,7 @@
             [token.db :as db]))
 
 (defn wallet-uri [wallet-id]
-  [:a {:href (str "#/wallet/" wallet-id)} "Open wallet"])
-
-(defn account-name [account]
-  (str (.substring account 0 20) "..."))
+  [:a.wallet-btn {:href (str "#/wallet/" wallet-id)} "Open wallet"])
 
 (defn wallet [wallet-id]
   (let [balance     (subscribe [:get-in (db/wallet-balance-path wallet-id)])]
@@ -19,7 +16,7 @@
         [:div.wallet
          [:div.wallet-image]
          [:div.wallet-name "Another wallet"]
-         [:div.wallet-hash (account-name wallet-id)]
+         [:div.wallet-hash wallet-id]
          [:div.wallet-currencies
           [:div.currency-usd [:span.currency (:unit balance-fmt)]
            (to-fixed (:amount balance-fmt) 6)]]
@@ -29,11 +26,12 @@
   (let [accounts (subscribe [:get-in db/wallet-accounts-path])]
     [:div
      [:div.top-nav
-      [:a.nav-update
-       {:on-click
-        (fn [_]
-          (re-frame/dispatch [:initialize-wallet]))}]
-      [:h2 {} "Wallets"]]
+      [:h2 {} "Wallets"]
+      [:div.nav-right
+       [:a.nav-update
+        {:on-click
+         (fn [_]
+           (re-frame/dispatch [:initialize-wallet]))}]]]
      [:div.wallets
       [s/slick {:dots           true
                 :infinite       false
@@ -41,8 +39,7 @@
                 :slidesToScroll 1
                 :arrows         false
                 :adaptiveHeight false
-                :centerMode     true
-                :variableWidth  true}
+                :centerMode     true}
        (doall (map (fn [id]
                      ^{:key id}
                      [:div [wallet id]])
