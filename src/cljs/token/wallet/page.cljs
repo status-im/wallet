@@ -8,37 +8,42 @@
 
 (defn nav []
   [:div.top-nav
-   [:span.nav-back
-    {:on-click
-     (fn [_]
-       (.back js/history))}]
-   [:a.nav-update
-    {:on-click
-     (fn [_]
-       (re-frame/dispatch [:initialize-wallet]))}]
-   [:h2 "Wallet name"]])
+   [:h2 "Wallet name"]
+   [:div.nav-left
+    [:a.nav-back
+     {:on-click
+      (fn [_]
+        (.back js/history))}]]
+   [:div.nav-right
+    [:a.nav-update
+     {:on-click
+      (fn [_]
+        (re-frame/dispatch [:initialize-wallet]))}]]])
 
 (defn wallet-info [wallet-id]
   (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])]
     (fn [wallet-id]
       (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
-        [:div.wallet
-         [:div.wallet-amount
-          [:p (to-fixed (:amount balance-fmt) 6)]
-          [:span (:unit balance-fmt)]]
-         [:div.wallet-controls
-          [:div.button
-           {:on-click (fn [_]
-                        (.dispatch (.-statusAPI js/window) (name :webview-send-transaction)
-                                   (clj->js {:callback (fn [params]
-                                                         (println (str "callback " (.stringify js/JSON params))))})))}
-           "Send"]
-          [:div.button "Receive"]]]))))
+        [:div.wallet-container
+         [:div.wallet
+          [:div.wallet-amount
+           [:p (to-fixed (:amount balance-fmt) 6)]
+           [:span (:unit balance-fmt)]]
+          [:div.wallet-controls
+           [:div.button.wallet-btn
+            {:on-click (fn [_]
+                         (.dispatch (.-statusAPI js/window) (name :webview-send-transaction)
+                                    (clj->js {:callback (fn [params]
+                                                          (println (str "callback " (.stringify js/JSON params))))})))}
+            "Send"]
+           [:div.button.wallet-btn
+            "Receive"]]]]))))
 
 (defn address [wallet-id]
-  [:div.wallet-address
-   [:span "Address"]
-   [:p wallet-id]])
+  [:div.wallet-address-container
+   [:div.wallet-address
+    [:span "Address"]
+    [:p wallet-id]]])
 
 (defn format-date [date-format date]
   (.format (goog.i18n.DateTimeFormat. date-format)
@@ -69,12 +74,13 @@
 
 (defn transactions [wallet-id]
   (let [transactions (subscribe [:get-in (db/wallet-transactions-path wallet-id)])]
-    [:div.wallet-transactions
-     [:span "Transactions"]
-     (if (empty? @transactions)
-       [:div.no-transactions "No transactions found"]
-       (doall
-         (map (partial transaction wallet-id) @transactions)))]))
+    [:div.wallet-transactions-container
+     [:div.wallet-transactions
+      [:span "Transactions"]
+      (if (empty? @transactions)
+        [:div.no-transactions "No transactions found"]
+        (doall
+          (map (partial transaction wallet-id) @transactions)))]]))
 
 (defn wallet [wallet-id]
   (dispatch [:get-transactions wallet-id])
