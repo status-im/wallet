@@ -13,6 +13,7 @@
 (defn transaction []
   (let [wallet-id (subscribe [:get :current-wallet])
         balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])
+        send-address (subscribe [:get :send-address])
         send-amount (subscribe [:get :send-amount])]
     (fn []
       [:div
@@ -27,7 +28,13 @@
          [:span "From"]
          [:p (str "Main Account – " (or @balance 0) " ETH")]]
 
-        [:div.send-to "To"
+        [:div.send-to
+         [:input.send-address-input {:value       @send-address
+                                     :placeholder "To"
+                                     :on-change   #(let [value (.-value (.-target %))]
+                                                    (dispatch [:set :send-address (if (empty? value)
+                                                                                    nil
+                                                                                    value)]))}]
          [:div.scan-qr {:on-click #(scan-qr-click)}
           [:span.image-qr] "Scan QR"]]
 
@@ -35,9 +42,9 @@
          [:input.send-amount-input {:value       @send-amount
                                     :placeholder "Amount"
                                     :on-change   #(let [value (.-value (.-target %))]
-                                                   (dispatch [:set :current-send-amount (if (empty? value)
-                                                                                          nil
-                                                                                          value)]))}]]
+                                                   (dispatch [:set :send-amount (if (empty? value)
+                                                                                  nil
+                                                                                  value)]))}]]
         [:div.send-currency "ETH" [:div.arrow-down]]
         [:div.transaction-fee
          [:div.send-fee

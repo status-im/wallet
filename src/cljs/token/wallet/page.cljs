@@ -29,6 +29,7 @@
                          {:amount amount}
                          (fn [params]
                            (println (str "callback " (.stringify js/JSON params)))
+                           (dispatch [:set :send-address params])
                            (dispatch! "/transaction")))))
 
 (defn request-money [amount]

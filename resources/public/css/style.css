@@ -500,6 +500,11 @@ input.amount {
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
+.send-address-input {
+    width: 70%;
+    border: 0;
+}
+
 .scan-qr {
     float: right;
     margin-right: 32px;
