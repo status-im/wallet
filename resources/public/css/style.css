@@ -312,15 +312,16 @@ span.currency {
 }
 
 .wallet-amount {
-    padding: 26px 32px;
+    padding: 12px;
     text-align: left;
-    font-weight: 300;
-    font-size: 48px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .wallet-amount p {
-    display: inline;
-
+    padding: 0px;
+    margin: 0px;
+    display: inline-block;
+    font-size: 21px;
     -webkit-touch-callout: none;
     -webkit-user-select: auto;
 }
@@ -330,26 +331,60 @@ span.currency {
     color: #939ba1;
 }
 
-.wallet-controls {
-    display: flex;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    color: #838c93;
-    white-space: nowrap;
-    cursor: pointer;
-    flex-direction: row;
+.wallet-send {
+    text-align: left;
+    padding: 16px 16px 16px 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.wallet-controls .button {
+.wallet-request {
+    text-align: left;
+    padding: 16px 16px 16px 16px;
+}
+
+.wallet .row .title {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Roboto-Medium', sans-serif;
+    color: rgba(131, 140, 147, 222); /*de838c93*/
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 10px;
+}
+
+.amount-controls {
+    margin: 0px;
+    padding: 0px;
+}
+
+.column {
     display: inline-block;
-    padding: 26px 0;
-    text-align: center;
-    font-size: 32px;
-    flex: 1;
 }
 
-.wallet-controls .button:first-child {
-    border-right: 1px solid rgba(0, 0, 0, 0.1);
+.amount-controls div.column {
+    width: 40%;
+    text-align: right;
 }
+
+.amount-controls div.column span {
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Roboto-Medium', sans-serif;
+    color: #7099e6;
+}
+
+.amount-controls input {
+    width: 60%;
+    margin: 0px;
+    padding: 0px;
+}
+
+input.amount {
+    font-size: 14px;
+    border: 0px;
+}
+
+
 
 .button-copy {
     display: inline-block;

@@ -6,13 +6,14 @@
 (defn scan-qr-click
   []
   (status/send-message :webview-scan-qr
+                       {}
                        (fn [params]
                          (println (str "callback " (.stringify js/JSON params))))))
 
 (defn transaction []
   (let [wallet-id (subscribe [:get :current-wallet])
         balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])
-        send-amount (subscribe [:get :current-send-amount])]
+        send-amount (subscribe [:get :send-amount])]
     (fn []
       [:div
        [:div.top-nav

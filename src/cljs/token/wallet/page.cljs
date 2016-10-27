@@ -22,8 +22,27 @@
       (fn [_]
         (re-frame/dispatch [:initialize-wallet]))}]]])
 
+(defn send-money [amount]
+  (println (str "send amount " amount))
+  (when (pos? amount)
+    (status/send-message :webview-send-transaction
+                         {:amount amount}
+                         (fn [params]
+                           (println (str "callback " (.stringify js/JSON params)))
+                           (dispatch! "/transaction")))))
+
+(defn request-money [amount]
+  (println (str "request amount " amount))
+  (when (pos? amount)
+    (status/send-message :webview-receive-transaction
+                         {:amount amount}
+                         (fn [params]
+                           (println (str "callback " (.stringify js/JSON params)))))))
+
 (defn wallet-info [wallet-id]
   (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])
+        send-amount (subscribe [:get :send-amount])
+        request-amount (subscribe [:get :request-amount])
         text (subscribe [:get :text])]
     (fn [wallet-id]
       (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
@@ -32,22 +51,26 @@
           [:div.wallet-amount
            [:p (to-fixed (:amount balance-fmt) 6)]
            [:span (:unit balance-fmt)]]
-          [:div.wallet-controls
-           [:div.button.wallet-btn
-            {:on-click (fn [_]
-                         (dispatch [:set :text "Sent !"])
-                         (status/send-message :webview-send-transaction
-                                              (fn [params]
-                                                (println (str "callback " (.stringify js/JSON params)))
-                                                (dispatch! "/transaction"))))}
-            "Send"]
-           [:div.button.wallet-btn
-            {:on-click (fn [_]
-                         (dispatch [:set :text "Receive !"])
-                         (status/send-message :webview-receive-transaction
-                                              (fn [params]
-                                                (println (str "callback " (.stringify js/JSON params))))))}
-            "Receive"]]]]))))
+          [:div.wallet-send.row
+           [:p.title "Send money"]
+           [:div.amount-controls
+            [:input.amount {:placeholder "Enter amount"
+                            :value @send-amount
+                            :on-change #(dispatch [:set :send-amount (.-value (.-target %))])
+                            :type :number}]
+            [:div.column
+             [:span {:on-click #(send-money @send-amount)}
+              "SEND"]]]]
+          [:div.wallet-request.row
+           [:p.title "Request money"]
+           [:div.amount-controls
+            [:input.amount {:placeholder "Enter amount"
+                            :value @request-amount
+                            :on-change #(dispatch [:set :request-amount (.-value (.-target %))])
+                            :type :number}]
+            [:div.column
+             [:span {:on-click #(request-money @request-amount)}
+              "RECEIVE"]]]]]]))))
 
 (defn address [wallet-id]
   [:div.wallet-address-container
