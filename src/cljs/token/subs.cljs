@@ -16,3 +16,8 @@
   :get-in
   (fn [db [_ path]]
     (reaction (get-in @db path))))
+
+(re-frame/register-sub
+  :get
+  (fn [db [_ key]]
+    (reaction (key @db))))

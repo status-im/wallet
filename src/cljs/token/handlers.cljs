@@ -49,6 +49,12 @@
     (assoc-in db (db/wallet-balance-path account) balance)))
 
 (re-frame/register-handler
+  :set
+  (fn set
+    [db [_ key value]]
+    (assoc db key value)))
+
+(re-frame/register-handler
   :get-transactions
   (fn get-transactions
     [db [_ account]]

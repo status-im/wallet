@@ -4,7 +4,7 @@
   (:require [secretary.core :as secretary]
             [goog.events :as events]
             [goog.history.EventType :as EventType]
-            [re-frame.core :as re-frame]))
+            [re-frame.core :refer [dispatch]]))
 
 (defonce history (History.))
 
@@ -23,12 +23,14 @@
   (secretary/set-config! :prefix "#")
 
   (defroute "/" []
-            (re-frame/dispatch [:set-active-panel :wallets-panel]))
+            (dispatch [:set :current-wallet nil])
+            (dispatch [:set-active-panel :wallets-panel]))
 
   (defroute "/wallet/:wallet-id" [wallet-id]
-            (re-frame/dispatch [:set-active-panel :wallet-panel wallet-id]))
+            (dispatch [:set :current-wallet wallet-id])
+            (dispatch [:set-active-panel :wallet-panel wallet-id]))
 
   (defroute "/transaction" []
-            (re-frame/dispatch [:set-active-panel :transaction-panel]))
+            (dispatch [:set-active-panel :transaction-panel]))
 
   (hook-browser-navigation!))
