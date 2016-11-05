@@ -58,11 +58,7 @@
   :get-transactions
   (fn get-transactions
     [db [_ account]]
-    (transactions account
-                  (fn [txs]
-                    (re-frame/dispatch
-                      ;; todo: takes 10 transactions
-                      [:set-transactions account (take 10 txs)])))
+    (transactions account #(re-frame/dispatch [:set-transactions account %]))
     db))
 
 (re-frame/register-handler
