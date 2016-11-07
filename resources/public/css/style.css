@@ -501,11 +501,12 @@ input.amount {
 }
 
 .send-address-input {
-    width: 70%;
+    width: 60%;
     border: 0;
 }
 
 .scan-qr {
+    width: 30%;
     float: right;
     margin-right: 32px;
     color: #7099e6;

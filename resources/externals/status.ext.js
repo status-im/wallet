@@ -1,0 +1,3 @@
+var statusApi = {
+    dispatch: function(){}
+};

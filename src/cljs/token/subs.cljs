@@ -21,3 +21,16 @@
   :get
   (fn [db [_ key]]
     (reaction (key @db))))
+
+(re-frame/register-sub
+  :get-balance
+  (fn [db]
+    (let [account-id (re-frame/subscribe [:get :current-wallet])]
+      (reaction (get-in @db [:eth :balance @account-id])))))
+
+(re-frame/register-sub
+  :send-amount
+  (fn []
+    (let [send-amount    (re-frame/subscribe [:get :send-amount])
+          send-amount-qr (re-frame/subscribe [:get :send-amount])]
+      (reaction (or @send-amount-qr @send-amount)))))

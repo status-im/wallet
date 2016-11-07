@@ -1,7 +1,8 @@
 (ns token.transaction.page
   (:require [re-frame.core :refer [subscribe dispatch]]
             [token.status :as status]
-            [token.db :as db]))
+            [token.db :as db]
+            [token.utils :as u]))
 
 (defn scan-qr-click
   []
@@ -11,17 +12,14 @@
                          (println (str "callback " (.stringify js/JSON params))))))
 
 (defn transaction []
-  (let [wallet-id (subscribe [:get :current-wallet])
-        balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])
-        send-address (subscribe [:get :send-address])
-        send-amount (subscribe [:get :send-amount])]
+  (let [balance        (subscribe [:get-balance])
+        send-address   (subscribe [:get :send-address])
+        send-amount    (subscribe [:send-amount])]
     (fn []
       [:div
        [:div.top-nav
         {:class ""}
-        [:span.nav-back {:on-click
-                         (fn [_]
-                           (.back js/history))}]
+        [:span.nav-back {:on-click #(.back js/history)}]
         [:h2 "Send funds"]]
        [:div.send-screen
         [:div.send-from
@@ -29,22 +27,18 @@
          [:p (str "Main Account – " (or @balance 0) " ETH")]]
 
         [:div.send-to
-         [:input.send-address-input {:value       @send-address
-                                     :placeholder "To"
-                                     :on-change   #(let [value (.-value (.-target %))]
-                                                    (dispatch [:set :send-address (if (empty? value)
-                                                                                    nil
-                                                                                    value)]))}]
+         [:input.send-address-input
+          {:value       @send-address
+           :placeholder "To"
+           :on-change   #(dispatch [:set :send-address (u/value %)])}]
          [:div.scan-qr {:on-click #(scan-qr-click)}
           [:span.image-qr] "Scan QR"]]
 
         [:div.send-amount
-         [:input.send-amount-input {:value       @send-amount
-                                    :placeholder "Amount"
-                                    :on-change   #(let [value (.-value (.-target %))]
-                                                   (dispatch [:set :send-amount (if (empty? value)
-                                                                                  nil
-                                                                                  value)]))}]]
+         [:input.send-amount-input
+          {:value       @send-amount
+           :placeholder "Amount"
+           :on-change   #(dispatch [:set :send-amount (u/value %)])}]]
         [:div.send-currency "ETH" [:div.arrow-down]]
         [:div.transaction-fee
          [:div.send-fee
@@ -60,4 +54,10 @@
                "be used to process this transaction. "
                "Your transaction will be mined probably within 30 seconds")]]]
        [:div.button-send
+        {:on-click
+         (fn [_]
+           (status/send-message :webview-send-eth
+                                {:amount  @send-amount
+                                 :address @send-address}
+                                #(.back js/history)))}
         [:span.image-send] (str "Send " (or @send-amount 0) " ETH")]])))

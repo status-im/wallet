@@ -6,7 +6,8 @@
             [goog.i18n.DateTimeFormat]
             [re-frame.core :as re-frame]
             [token.status :as status]
-            [token.db :as db]))
+            [token.db :as db]
+            [token.utils :as u]))
 
 (defn nav []
   [:div.top-nav
@@ -28,9 +29,13 @@
     (status/send-message :webview-send-transaction
                          {:amount amount}
                          (fn [params]
-                           (println (str "callback " (.stringify js/JSON params)))
-                           (dispatch [:set :send-address params])
-                           (dispatch! "/transaction")))))
+                           (let [{:keys [address amount] :as params'}
+                                 (js->clj params :keywordize-keys true)]
+
+                             (println (str "callback " params'))
+                             (dispatch [:set :send-address address])
+                             (dispatch [:set :send-amount-qr amount])
+                             (dispatch! "/transaction"))))))
 
 (defn request-money [amount]
   (println (str "request amount " amount))
@@ -41,10 +46,10 @@
                            (println (str "callback " (.stringify js/JSON params)))))))
 
 (defn wallet-info [wallet-id]
-  (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])
-        send-amount (subscribe [:get :send-amount])
+  (let [balance        (subscribe [:get-in (db/wallet-balance-path wallet-id)])
+        send-amount    (subscribe [:get :send-amount])
         request-amount (subscribe [:get :request-amount])
-        text (subscribe [:get :text])]
+        text           (subscribe [:get :text])]
     (fn [wallet-id]
       (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
         [:div.wallet-container
@@ -56,9 +61,9 @@
            [:p.title "Send money"]
            [:div.amount-controls
             [:input.amount {:placeholder "Enter amount"
-                            :value @send-amount
-                            :on-change #(dispatch [:set :send-amount (.-value (.-target %))])
-                            :type :number}]
+                            :value       @send-amount
+                            :on-change   #(dispatch [:set :send-amount (u/value %)])
+                            :type        :number}]
             [:div.column
              [:span {:on-click #(send-money @send-amount)}
               "SEND"]]]]
@@ -66,9 +71,9 @@
            [:p.title "Request money"]
            [:div.amount-controls
             [:input.amount {:placeholder "Enter amount"
-                            :value @request-amount
-                            :on-change #(dispatch [:set :request-amount (.-value (.-target %))])
-                            :type :number}]
+                            :value       @request-amount
+                            :on-change   #(dispatch [:set :request-amount (u/value %)])
+                            :type        :number}]
             [:div.column
              [:span {:on-click #(request-money @request-amount)}
               "RECEIVE"]]]]]]))))
@@ -89,8 +94,9 @@
 (defn transaction [wallet-id tx]
   (let [sender       (.-from tx)
         recipient    (.-to tx)
-        amount       (.-value tx)
-        amount-fmt   (format-wei amount)
+        value        (.-value tx)
+        {:keys [amount unit]} (format-wei value)
+
         timestamp    (* 1000 (.-timeStamp tx))
         incoming?    (= recipient wallet-id)
         action-class {:class (if incoming? "action-add" "action-remove")}
@@ -104,7 +110,7 @@
       [:div.transaction-date (format-date "d MMM 'at' hh:mm" timestamp)]
       [:div.transaction-amount
        [:span amount-class
-        (str sign (:amount amount-fmt) " " (:unit amount-fmt))]]]]))
+        (str sign amount " " unit)]]]]))
 
 (defn transactions [wallet-id]
   (let [transactions (subscribe [:get-in (db/wallet-transactions-path wallet-id)])]

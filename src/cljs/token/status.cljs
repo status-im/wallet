@@ -1,9 +1,9 @@
-(ns token.status
-  (:require [re-frame.core :as re-frame]))
+(ns token.status)
 
 (defn send-message
-  [event data callback]
-  (.dispatch (.-statusAPI js/window)
-             (name event)
-             (clj->js {:callback callback
-                       :data data})))
+  ([event data] (send-message event data nil))
+  ([event data callback]
+   (.dispatch (.-statusAPI js/window)
+              (name event)
+              (clj->js {:callback callback
+                        :data     data}))))
