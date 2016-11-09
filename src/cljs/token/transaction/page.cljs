@@ -1,7 +1,6 @@
 (ns token.transaction.page
   (:require [re-frame.core :refer [subscribe dispatch]]
             [token.status :as status]
-            [token.db :as db]
             [token.utils :as u]))
 
 (defn scan-qr-click
@@ -9,12 +8,12 @@
   (status/send-message :webview-scan-qr
                        {}
                        (fn [params]
-                         (println (str "callback " (.stringify js/JSON params))))))
+                         #_(println (str "callback " (.stringify js/JSON params))))))
 
 (defn transaction []
-  (let [balance        (subscribe [:get-balance])
-        send-address   (subscribe [:get :send-address])
-        send-amount    (subscribe [:send-amount])]
+  (let [balance      (subscribe [:get-balance])
+        send-address (subscribe [:get :send-address])
+        send-amount  (subscribe [:send-amount])]
     (fn []
       [:div
        [:div.top-nav
@@ -54,10 +53,5 @@
                "be used to process this transaction. "
                "Your transaction will be mined probably within 30 seconds")]]]
        [:div.button-send
-        {:on-click
-         (fn [_]
-           (status/send-message :webview-send-eth
-                                {:amount  @send-amount
-                                 :address @send-address}
-                                #(.back js/history)))}
+        {:on-click #(dispatch [:send-eth])}
         [:span.image-send] (str "Send " (or @send-amount 0) " ETH")]])))

@@ -52,7 +52,8 @@
                     :closure-defines {goog.DEBUG false}
                     :foreign-libs    [{:file     "resources/js/react-slick.min.js"
                                        :provides ["react-slick"]}]
-                    :pretty-print    false}}
+                    :pretty-print    false
+                    :externs         ["resources/externals/status.ext.js"]}}
     {:id           "test"
      :source-paths ["src/cljs" "test/cljs"]
      :compiler     {:output-to     "resources/public/js/compiled/test.js"

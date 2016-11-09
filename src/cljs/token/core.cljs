@@ -11,7 +11,7 @@
 
 (defn dev-setup []
   (when config/debug?
-    (println "dev mode")
+    #_(println "dev mode")
     (devtools/install!)))
 
 (defn mount-root []

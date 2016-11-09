@@ -32,5 +32,11 @@
   :send-amount
   (fn []
     (let [send-amount    (re-frame/subscribe [:get :send-amount])
-          send-amount-qr (re-frame/subscribe [:get :send-amount])]
-      (reaction (or @send-amount-qr @send-amount)))))
+          send-amount-qr (re-frame/subscribe [:get :send-amount-qr])]
+      (reaction @send-amount)
+      #_(reaction (or @send-amount-qr @send-amount)))))
+
+(re-frame/register-sub
+  :pending-transactions
+  (fn [db [_ wallet-id]]
+    (reaction (vals (get-in @db [:pending-transactions wallet-id])))))

@@ -24,7 +24,7 @@
         (re-frame/dispatch [:initialize-wallet]))}]]])
 
 (defn send-money [amount]
-  (println (str "send amount " amount))
+  #_(println (str "send amount " amount))
   (when (pos? amount)
     (status/send-message :webview-send-transaction
                          {:amount amount}
@@ -32,18 +32,18 @@
                            (let [{:keys [address amount] :as params'}
                                  (js->clj params :keywordize-keys true)]
 
-                             (println (str "callback " params'))
+                             #_(println (str "callback " params'))
                              (dispatch [:set :send-address address])
                              (dispatch [:set :send-amount-qr amount])
                              (dispatch! "/transaction"))))))
 
 (defn request-money [amount]
-  (println (str "request amount " amount))
+  #_(println (str "request amount " amount))
   (when (pos? amount)
     (status/send-message :webview-receive-transaction
                          {:amount amount}
                          (fn [params]
-                           (println (str "callback " (.stringify js/JSON params)))))))
+                           #_(println (str "callback " (.stringify js/JSON params)))))))
 
 (defn wallet-info [wallet-id]
   (let [balance        (subscribe [:get-in (db/wallet-balance-path wallet-id)])
@@ -65,8 +65,8 @@
                             :on-change   #(dispatch [:set :send-amount (u/value %)])
                             :type        :number}]
             [:div.column
-             [:span {:on-click #(send-money @send-amount)}
-              "SEND"]]]]
+             [:span {:on-click (when (pos? (js/parseFloat @balance))
+                                 #(send-money @send-amount))} "SEND"]]]]
           [:div.wallet-request.row
            [:p.title "Request money"]
            [:div.amount-controls
@@ -92,35 +92,39 @@
   (str (.substring account 0 20) "..."))
 
 (defn transaction [wallet-id tx]
-  (let [sender       (.-from tx)
-        recipient    (.-to tx)
-        value        (.-value tx)
+  (let [{:keys [from to value timeStamp hash timestamp confirmations]}
+        (js->clj tx :keywordize-keys true)
         {:keys [amount unit]} (format-wei value)
-
-        timestamp    (* 1000 (.-timeStamp tx))
-        incoming?    (= recipient wallet-id)
+        timestamp'   (or timestamp (* 1000 timeStamp))
+        incoming?    (= to wallet-id)
         action-class {:class (if incoming? "action-add" "action-remove")}
         amount-class {:class (if incoming? "green" "red")}
         sign         (if incoming? "+" "-")]
-    ^{:key (gensym "tx__")}
+    ^{:key hash}
     [:div.transaction
      [:div.transaction-action [:div action-class]]
      [:div.transaction-details
-      [:div.transaction-name (account-name (if incoming? sender recipient))]
-      [:div.transaction-date (format-date "d MMM 'at' hh:mm" timestamp)]
+      [:div.transaction-name (account-name (if incoming? from to))]
+      [:div.transaction-date (str (format-date "d MMM 'at' hh:mm" timestamp')
+                                  " "
+                                  (when-not confirmations "(pending...)"))]
       [:div.transaction-amount
        [:span amount-class
         (str sign amount " " unit)]]]]))
 
 (defn transactions [wallet-id]
-  (let [transactions (subscribe [:get-in (db/wallet-transactions-path wallet-id)])]
+  (let [transactions         (subscribe [:get-in (db/wallet-transactions-path wallet-id)])
+        pending-transactions (subscribe [:pending-transactions wallet-id])]
     [:div.wallet-transactions-container
      [:div.wallet-transactions
       [:span "Transactions"]
-      (if (empty? @transactions)
+      (if (and (empty @pending-transactions) (empty? @transactions))
         [:div.no-transactions "No transactions found"]
-        (doall
-          (map (partial transaction wallet-id) @transactions)))]]))
+        (concat
+          (doall
+            (map (partial transaction wallet-id) @pending-transactions))
+          (doall
+            (map (partial transaction wallet-id) @transactions))))]]))
 
 (defn wallet [wallet-id]
   (dispatch [:get-transactions wallet-id])
