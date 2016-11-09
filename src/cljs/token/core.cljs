@@ -22,5 +22,7 @@
   (routes/app-routes)
   (re-frame/dispatch-sync [:initialize-db])
   (re-frame/dispatch [:initialize-wallet])
+  (re-frame/dispatch [:refresh-accounts])
+  (re-frame/dispatch [:start-auto-refreshing 15000])
   (dev-setup)
   (mount-root))

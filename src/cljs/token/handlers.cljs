@@ -28,19 +28,42 @@
     [{:keys [eth] :as db} _]
     (let [rpc-url (:rpc-url eth)
           web3    (connect rpc-url)]
-      (accounts web3
-                (fn [error result]
-                  (when error
-                    #_(println (str "error: " error)))
-                  (re-frame/dispatch
-                    [:set-accounts result])))
       (assoc-in db [:eth :web3] web3))))
+
+(register-handler
+  :start-auto-refreshing
+  (fn [db [_ refresh-timer]]
+    (js/setInterval
+      #(re-frame/dispatch [:refresh-accounts]) refresh-timer)
+    db))
+
+(register-handler
+  :refresh-accounts
+  (fn [{:keys [eth] :as db} _]
+    (let [web3 (:web3 eth)]
+      (when web3
+        (accounts web3
+                  (fn [error result]
+                    (when error
+                      #_(println (str "error: " error)))
+                    (re-frame/dispatch
+                      [:set-accounts result]))))
+    db)))
+
+(register-handler
+  :refresh-account
+  (fn [db [_ account refresh-transactions?]]
+    #_(println (str "refreshing wallet " account refresh-transactions?))
+    (re-frame/dispatch [:get-balance account])
+    (when refresh-transactions?
+      (re-frame/dispatch [:get-transactions account]))
+    db))
 
 (register-handler
   :set-accounts
   (fn set-accounts
     [db [_ accounts]]
-    (doall (map #(re-frame/dispatch [:get-balance %]) accounts))
+    (doall (map #(re-frame/dispatch [:refresh-account %]) accounts))
     (assoc-in db db/wallet-accounts-path accounts)))
 
 (register-handler
@@ -81,7 +104,8 @@
     (fn [db [_ account]]
       (let [transactions (get-in db (db/wallet-transactions-path account))
             hashes       (map :hash transactions)]
-        (re-frame/dispatch [:clear-pending-transactions account hashes]))))
+        (when (not-empty hashes)
+          (re-frame/dispatch [:clear-pending-transactions account hashes])))))
   (fn set-transactions
     [db [_ account transactions]]
     (let [transactions' (js->clj transactions :keywordize-keys true)]

@@ -9,9 +9,9 @@
             [token.db :as db]
             [token.utils :as u]))
 
-(defn nav []
+(defn nav [wallet-id]
   [:div.top-nav
-   [:h2 "Wallet name"]
+   [:h2 "Main wallet"]
    [:div.nav-left
     [:a.nav-back
      {:on-click
@@ -21,7 +21,7 @@
     [:a.nav-update
      {:on-click
       (fn [_]
-        (re-frame/dispatch [:initialize-wallet]))}]]])
+        (re-frame/dispatch [:refresh-account wallet-id true]))}]]])
 
 (defn send-money [amount]
   #_(println (str "send amount " amount))
@@ -58,7 +58,7 @@
            [:p (to-fixed (:amount balance-fmt) 6)]
            [:span (:unit balance-fmt)]]
           [:div.wallet-send.row
-           [:p.title "Send money"]
+           [:p.title "Send ETH"]
            [:div.amount-controls
             [:input.amount {:placeholder "Enter amount"
                             :value       @send-amount
@@ -68,7 +68,7 @@
              [:span {:on-click (when (pos? (js/parseFloat @balance))
                                  #(send-money @send-amount))} "SEND"]]]]
           [:div.wallet-request.row
-           [:p.title "Request money"]
+           [:p.title "Request ETH"]
            [:div.amount-controls
             [:input.amount {:placeholder "Enter amount"
                             :value       @request-amount
@@ -129,7 +129,7 @@
 (defn wallet [wallet-id]
   (dispatch [:get-transactions wallet-id])
   [:div.wallet-screen
-   [nav]
+   [nav wallet-id]
    [wallet-info wallet-id]
    [address wallet-id]
    [transactions wallet-id]])
