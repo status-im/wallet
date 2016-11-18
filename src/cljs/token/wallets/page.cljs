@@ -15,7 +15,7 @@
       (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
         [:div.wallet
          [:div.wallet-image]
-         [:div.wallet-name "Another wallet"]
+         [:div.wallet-name "Main wallet"]
          [:div.wallet-hash wallet-id]
          [:div.wallet-currencies
           [:div.currency-usd [:span.currency (:unit balance-fmt)]
@@ -31,7 +31,7 @@
        [:a.nav-update
         {:on-click
          (fn [_]
-           (re-frame/dispatch [:initialize-wallet]))}]]]
+           (re-frame/dispatch [:refresh-accounts]))}]]]
      [:div.wallets
       [s/slick {:dots           true
                 :infinite       false
