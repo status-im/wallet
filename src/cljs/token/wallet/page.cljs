@@ -39,11 +39,10 @@
 
 (defn request-money [amount]
   #_(println (str "request amount " amount))
-  (when (pos? amount)
-    (status/send-message :webview-receive-transaction
-                         {:amount amount}
-                         (fn [params]
-                           #_(println (str "callback " (.stringify js/JSON params)))))))
+  (status/send-message :webview-receive-transaction
+                       {:amount amount}
+                       (fn [params]
+                         #_(println (str "callback " (.stringify js/JSON params))))))
 
 (defn wallet-info [wallet-id]
   (let [balance        (subscribe [:get-in (db/wallet-balance-path wallet-id)])
