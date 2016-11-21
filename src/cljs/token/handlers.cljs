@@ -48,15 +48,13 @@
                       #_(println (str "error: " error)))
                     (re-frame/dispatch
                       [:set-accounts result]))))
-    db)))
+      db)))
 
 (register-handler
   :refresh-account
-  (fn [db [_ account refresh-transactions?]]
-    #_(println (str "refreshing wallet " account refresh-transactions?))
+  (fn [db [_ account]]
+    #_(println (str "refreshing wallet " account))
     (re-frame/dispatch [:get-balance account])
-    (when refresh-transactions?
-      (re-frame/dispatch [:get-transactions account]))
     db))
 
 (register-handler
@@ -70,13 +68,15 @@
   :get-balance
   (fn get-balance
     [db [_ account]]
-    (let [web3 (get-in db [:eth :web3])]
+    (let [web3            (get-in db [:eth :web3])
+          current-balance (or (get-in db (db/wallet-balance-path account)) 0)]
       (balance web3 account
                (fn [error result]
-                 (when error
-                   #_(println (str "error: " error)))
-                 (re-frame/dispatch
-                   [:set-balance account (wei->ether result)])))
+                 (when-not error
+                   (let [updated-balance (wei->ether result)]
+                     (when-not (= current-balance updated-balance)
+                       (re-frame/dispatch [:set-balance account updated-balance])
+                       (re-frame/dispatch [:get-transactions account]))))))
       db)))
 
 (register-handler
