@@ -21,7 +21,7 @@
     [:a.nav-update
      {:on-click
       (fn [_]
-        (re-frame/dispatch [:refresh-account wallet-id true]))}]]])
+        (re-frame/dispatch [:refresh-account wallet-id]))}]]])
 
 (defn send-money [amount]
   #_(println (str "send amount " amount))
@@ -126,7 +126,6 @@
             (map (partial transaction wallet-id) @transactions))))]]))
 
 (defn wallet [wallet-id]
-  (dispatch [:get-transactions wallet-id])
   [:div.wallet-screen
    [nav wallet-id]
    [wallet-info wallet-id]
