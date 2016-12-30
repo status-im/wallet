@@ -6,8 +6,10 @@
 (defn connect
   [rpc-url]
   #_(println (str "connecting to " rpc-url))
-  (->> (js/Web3.providers.HttpProvider. rpc-url)
-       (js/Web3.)))
+  (if (exists? js/web3)
+    js/web3
+    (->> (js/Web3.providers.HttpProvider. rpc-url)
+         (js/Web3.))))
 
 (defn to-fixed
   [amount precision]
