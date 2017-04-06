@@ -62,7 +62,7 @@
 
 (defn transactions
   [account callback]
-  (let [api-url (str "https://testnet.etherscan.io/api?module=account&action=txlist&address="
+  (let [api-url (str "https://ropsten.etherscan.io/api?module=account&action=txlist&address="
                      account
                      "&startblock=0&endblock=99999999&sort=desc&apikey=YourApiKeyToken")
         xhr     (net/xhr-connection)]
