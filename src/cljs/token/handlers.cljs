@@ -148,4 +148,7 @@
 (register-handler
   :clear-pending-transactions
   (fn [db [_ account hashes]]
-    (update-in db [:pending-transactions account] apply dissoc hashes)))
+    (update-in db [:pending-transactions account]
+               (fn [transactions]
+                 (when transactions
+                   (apply dissoc transactions hashes))))))
