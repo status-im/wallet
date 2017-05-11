@@ -6,27 +6,30 @@
             [re-frame.core :as re-frame]
             [token.db :as db]))
 
-(defn wallet-uri [wallet-id]
-  [:a.wallet-btn {:href (str "#/wallet/" wallet-id)} "Open wallet"])
+(defn allTransactions []
+  [:div.wallet-transactions-container
+   [:div.wallet-transactions
+    [:span "Transaction history"]]])
 
 (defn wallet [wallet-id]
-  (let [balance     (subscribe [:get-in (db/wallet-balance-path wallet-id)])]
+  (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])]
     (fn [wallet-id]
       (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
-        [:div.wallet
-         [:div.wallet-image]
-         [:div.wallet-name "Main wallet"]
-         [:div.wallet-hash wallet-id]
-         [:div.wallet-currencies
-          [:div.currency-usd [:span.currency (:unit balance-fmt)]
-           (to-fixed (:amount balance-fmt) 6)]]
-         (wallet-uri wallet-id)]))))
+        [:a.wallet-btn {:href (str "#/wallet/" wallet-id)}
+         [:div.wallet
+          [:div.wallet-name "Main wallet" [:span.cur (:unit balance-fmt)]]
+          [:span.wallet-currencies
+           [:div.currency-usd
+            (to-fixed (:amount balance-fmt) 4) [:span.cur (:unit balance-fmt)]]]
+          ] [:div.clearfix]]))))
 
 (defn wallets []
   (let [accounts (subscribe [:get-in db/wallet-accounts-path])]
     [:div
      [:div.top-nav
-      [:h2 {} "Wallets"]
+      [:h2 {} "Wallet"]
+      [:div.nav-left
+       [:a.nav-back-hp [:span "W"]]]
       [:div.nav-right
        [:a.nav-update
         {:on-click
@@ -43,8 +46,21 @@
        (doall (map (fn [id]
                      ^{:key id}
                      [:div [wallet id]])
-                   @accounts))]]
-     [:div.wallet-actions
-      [:a.trade-eth {:href "#"} "Trade ETH"]
-      [:a.create-wallet {:href "#"}
-       [:span.add-wallet] "Create a wallet"]]]))
+                   @accounts))]
+      [:a.wallet-btn {:href (str "#/")}
+       [:div.wallet.manage-wallet
+        [:div.wallet-name "Manage wallets"]
+        [:span.wallet-points
+         [:div.point] [:div.point] [:div.point]]
+        ] [:div.clearfix]]
+      [:a.wallet-btn-left {:href (str "#/")}
+       [:div.wallet.btn-wallet
+        [:div.wallet-href-name "Recieve"]
+        ] [:div.clearfix]]
+      [:a.wallet-btn-right {:href (str "#/")}
+       [:div.wallet.btn-wallet
+        [:div.wallet-href-name "Send"]
+        ] [:div.clearfix]]]
+     [:div.wallet-transactions-container
+      [:div.wallet-transactions
+       [:span "Transaction History"]]]]))

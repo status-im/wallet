@@ -15,7 +15,7 @@ body {
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    background-color: #eef2f5;
+    background-color: #fff;
 
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -37,42 +37,65 @@ h2 {
     font-weight: 400;
     font-size: 32px;
 }
-
-
+.slick-slider{
+    margin-bottom: 0 !important;
+}
 
 .top-nav {
     display: flex;
     align-items: center;
-    background-color: #eef2f5;
     vertical-align: middle;
 }
 
 .top-nav h2 {
     padding: 32px;
     flex: 1;
-    text-align: center;
+    text-align: left;
+    padding-left: 120px;
+    text-transform: uppercase;
+    color: #628fe3;
+    font-weight: 800;
+    letter-spacing: 4px;
 }
 
 .top-nav .nav-left {
     position: absolute;
     left: 32px;
 }
-
 .top-nav .nav-left .nav-back {
     display: inline-block;
     width: 32px;
     height: 32px;
     padding: 16px;
     background: url(assets/icon_back_copy.svg) center center no-repeat;
+    background-color: #628fe3;
+    border-radius: 40px;
 }
-
+.top-nav .nav-left .nav-back-hp {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    padding: 16px;
+    background-color: #628fe3;
+    border-radius: 40px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+    color: #fff;
+}
+.top-nav .nav-left .nav-back-hp span {
+    position: absolute;
+    top: 10px;
+    left: 19px;
+}
 .top-nav .nav-right {
     position: absolute;
     right: 32px;
 }
 
 .top-nav .nav-right .nav-update {
-    display: inline-block;
+    /*display: inline-block;*/
+    display: none;
     width: 32px;
     height: 32px;
     padding: 16px;
@@ -84,23 +107,28 @@ h2 {
 /* Wallets */
 
 .wallets {
-    background-color: #eef2f5;
-    text-align: center;
-    padding-top: 15vh;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+    position: relative;
+    background: #628fe3;
+    border-radius: 10px;
 }
 
 .wallets h2 {
     padding: 16px;
 }
 
+.wallets a {
+    color: #fff;
+    text-decoration: none;
+}
+
 .wallets .wallet {
-    margin-top: 32px;
-    margin-bottom: 32px;
-    margin-left: 16px;
-    margin-right: 16px;
+    border-bottom: 2px solid #4669ad;
+    padding-bottom: 25px;
     position: relative;
-    background-color: #fff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-left: 20px;
 }
 
 
@@ -113,14 +141,17 @@ h2 {
 }
 
 .wallet-container {
-    background-color: #eef2f5;
-    padding: 16px;
+    background-color: #fff;
+    padding: 25px;
+    padding-top: 0px;
 }
 
 .wallet-container .wallet {
     position: relative;
-    background-color: #fff;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    background-color: #628fe3;
+    border-radius: 15px;
+    padding: 10px;
+    color: #fff;
 }
 
 .wallet-image {
@@ -134,13 +165,35 @@ h2 {
 }
 
 .wallet-name {
-    margin-left: 80px;
-    padding-top: 32px;
-    padding-left: 32px;
+    padding-top: 25px;
     text-align: left;
-    font-size: 32px;
+    font-size: 26px;
 }
-
+.manage-wallet{
+    border-bottom: none !important;
+}
+.wallet-points {
+    position: absolute;
+    right: 20px;
+    top: 45px;
+}
+.wallet-points .point{
+    background: #4669ad;
+    display: block;
+    width: 5px;
+    height: 5px;
+    border-radius: 5px;
+    float: left;
+    margin-right: 3px;
+}
+.btn-wallet {
+    margin-left: 0 !important;
+    border-top: 2px solid #4669ad !important;
+}
+.wallet-name span.cur {
+    margin-left: 10px;
+    color: #c0d2f3 !important;
+}
 .wallet-hash {
     margin-left: 80px;
     padding-left: 32px;
@@ -163,7 +216,6 @@ h2 {
 .wallet-address-container {
     background-color: #eef2f5;
     padding-top: 2px;
-    padding-bottom: 12px;
 }
 
 .wallet-address {
@@ -195,8 +247,7 @@ h2 {
 }
 
 .wallet-transactions-container {
-    background-color: #eef2f5;
-    padding-top: 2px;
+
 }
 
 .wallet-transactions {
@@ -209,8 +260,8 @@ h2 {
 
 .wallet-transactions > span {
     display: block;
-    padding: 32px 0 0 32px;
-    font-weight: 500;
+    padding: 10px 0 0 20px;
+    font-weight: 400;
     margin-bottom: 12px;
 }
 
@@ -220,10 +271,7 @@ h2 {
 }
 
 .wallet-currencies {
-    display: block;
-    margin-top: 60px;
-    width: 100%;
-    text-align: center;
+    text-align: right;
 }
 
 .wallet-btn:hover {
@@ -242,14 +290,45 @@ h2 {
 .slick-slider .slick-dots li.slick-active button:before {
     opacity: 1;
 }
-
-.currency-usd, .currency-rub {
-    display: inline-block;
-    width: 32%;
-    vertical-align: top;
-    font-size: 32px;
+.wallet-btn-left .wallet,
+.wallet-btn-right .wallet {
+    border: none;
 }
-
+.wallet-btn-left,
+.wallet-btn-right {
+    text-center;
+    width: 50%;
+    font-size: 25px;
+    background: #517bc9;
+}
+.wallet.btn-wallet {
+    border-bottom-right-radius: 10px;
+    background: #517bc9;
+    border-bottom-left-radius: 10px;
+}
+.cur{
+    margin-left: 10px;
+}
+.wallet-btn-left{
+    float: left;
+    border-right: 2px solid #4669ad;
+    position: relative;
+    z-index: 1111111;
+    border-bottom-left-radius: 10px;
+}
+.currency-usd, .currency-rub {
+    font-size: 25px;
+    position: absolute;
+    top: 25px;
+    right: 20px;
+}
+.wallet-href-name {
+    padding-top: 10px;
+    text-align: center;
+}
+.clearfix {
+    clear: both;
+}
 span.currency {
     display: block;
     color: #838c93;
@@ -327,10 +406,23 @@ span.currency {
 }
 
 .wallet-amount span {
-    float: right;
-    color: #939ba1;
+    padding-left: 10px;
+    color: #c0d2f3;
+    font-size: 20px;
 }
-
+.wallet-amount p.left-block {
+    flot:left
+}
+.wallet-amount span.pull-right {
+    text-align: right;
+    float:right;
+}
+.wallet-amount span.pull-right span {
+    color: #fff;
+}
+.wallet-amount p.right-block {
+    width:50%;
+}
 .wallet-send {
     text-align: left;
     padding: 16px 16px 16px 16px;
