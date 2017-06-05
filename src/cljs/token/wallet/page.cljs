@@ -54,9 +54,13 @@
         [:div.wallet-container
          [:div.wallet
           [:div.wallet-amount
-           [:p.left-block "Main wallet"]
-           [:span (:unit balance-fmt)]
-           [:span.pull-right (to-fixed (:amount balance-fmt) 4) (:unit balance-fmt)]]
+           [:div.left-block "Main wallet"
+            [:span.wallet-points
+              [:span.point] [:span.point] [:span.point]]
+            ]
+            [:p (to-fixed (:amount balance-fmt) 2) [:span.unitDetail (:unit balance-fmt)]]
+            [:p.address-detail "Address"]
+           ]
           [:div.wallet-send.row
            [:p.title "Send ETH"]
            [:div.amount-controls
