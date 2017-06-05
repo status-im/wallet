@@ -48,39 +48,30 @@
   (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])
         send-amount (subscribe [:get :send-amount])
         request-amount (subscribe [:get :request-amount])
-        text (subscribe [:get :text])]
+        text           (subscribe [:get :text])]
     (fn [wallet-id]
       (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
         [:div.wallet-container
          [:div.wallet
-          [:div.wallet-amount
+          [:div.wallet-amount.detail
            [:div.left-block "Main wallet"
-            [:span.wallet-points
-              [:span.point] [:span.point] [:span.point]]
+            [:span.wallet-points.detail "..."]
             ]
             [:p (to-fixed (:amount balance-fmt) 2) [:span.unitDetail (:unit balance-fmt)]]
-            [:p.address-detail "Address"]
+            [:div.address-detail "Address"]
+            [:p wallet-id]
            ]
-          [:div.wallet-send.row
-           [:p.title "Send ETH"]
-           [:div.amount-controls
-            [:input.amount {:placeholder "Enter amount"
-                            :value       @send-amount
-                            :on-change   #(dispatch [:set :send-amount (u/value %)])
-                            :type        :number}]
-            [:div.column
-             [:span {:on-click (when (pos? (js/parseFloat @balance))
-                                 #(send-money @send-amount))} "SEND"]]]]
-          [:div.wallet-request.row
-           [:p.title "Request ETH"]
-           [:div.amount-controls
-            [:input.amount {:placeholder "Enter amount"
-                            :value       @request-amount
-                            :on-change   #(dispatch [:set :request-amount (u/value %)])
-                            :type        :number}]
-            [:div.column
-             [:span {:on-click #(request-money @request-amount)}
-              "RECEIVE"]]]]]]))))
+          [:div.wallets-detail
+            [:a.wallet-btn-left {:href (str "#/")}
+             [:div.btn-wallet
+              [:div.wallet-href-name "Copy Address"]
+              ] [:div.clearfix]]
+            [:a.wallet-btn-right {:href (str "#/")}
+             [:div.btn-wallet
+              [:div.wallet-href-name "Show CR"]
+              ] [:div.clearfix]]
+            [:div.clearfix]
+           ]]]))))
 
 (defn format-date [date-format date]
   (.format (goog.i18n.DateTimeFormat. date-format)

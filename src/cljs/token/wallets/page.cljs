@@ -6,7 +6,7 @@
             [re-frame.core :as re-frame]
             [token.db :as db]))
 
-(defn allTransactions []
+(defn all-transactions []
   [:div.wallet-transactions-container
    [:div.wallet-transactions
     [:span "Transaction history"]]])
@@ -50,8 +50,7 @@
       [:a.wallet-btn {:href (str "#/")}
        [:div.wallet.manage-wallet
         [:div.wallet-name "Manage wallets"]
-        [:span.wallet-points
-         [:div.point] [:div.point] [:div.point]]
+        [:span.wallet-points "..."]
         ] [:div.clearfix]]
       [:a.wallet-btn-left {:href (str "#/")}
        [:div.wallet.btn-wallet
