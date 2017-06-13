@@ -1,4 +1,4 @@
-(ns token.wallets.page
+(ns token.manage-wallets.page
   (:require [re-frame.core :refer [subscribe dispatch]]
             [token.ethereum :refer [to-fixed unit->wei format-wei]]
             [reagent.core :as r]
@@ -6,36 +6,35 @@
             [re-frame.core :as re-frame]
             [token.db :as db]))
 
-(defn all-transactions []
-  [:div.wallet-transactions-container
-   [:div.wallet-transactions
-    [:span "Transaction history"]]])
-
 (defn wallet [wallet-id]
   (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])]
     (fn [wallet-id]
       (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
         [:a.wallet-btn {:href (str "#/wallet/" wallet-id)}
-         [:div.wallet
-          [:div.wallet-name "Main wallet" [:span.cur (:unit balance-fmt)]]
+         [:div.manage-wallets-item
+          [:div.wallet-name.manage-wallet "Main wallet" [:span.manage-wallet-cur (:unit balance-fmt)]]
           [:span.wallet-currencies
-           [:div.currency-usd
-            (to-fixed (:amount balance-fmt) 4) [:span.cur (:unit balance-fmt)]]]
+           [:div.currency-usd.manage-wallets
+            (to-fixed (:amount balance-fmt) 4) [:span.manage-wallet-cur (:unit balance-fmt)]]]
+            [:span.wallet-points.manage-wallets "..."]
           ] [:div.clearfix]]))))
 
-(defn wallets []
+(defn manage-wallets []
   (let [accounts (subscribe [:get-in db/wallet-accounts-path])]
     [:div
      [:div.top-nav
       [:h2 {} "Wallet"]
       [:div.nav-left
-       [:a.nav-back-hp [:span "W"]]]
+       [:a.nav-back
+        {:on-click
+         (fn [_]
+           (.back js/history))}]]
       [:div.nav-right
        [:a.nav-update
         {:on-click
          (fn [_]
            (re-frame/dispatch [:refresh-accounts]))}]]]
-     [:div.wallets
+     [:div.wallets.manage-wallets
       [s/slick {:dots           true
                 :infinite       false
                 :slidesToShow   1
@@ -46,18 +45,7 @@
        (doall (map (fn [id]
                      ^{:key id}
                      [:div [wallet id]])
-                   @accounts))]
-      [:a.wallet-btn {:href (str "#/manage-wallets")}
-       [:div.wallet.manage-wallet
-        [:div.wallet-name "Manage wallets"]
-        [:span.wallet-points "..."]
-        ] [:div.clearfix]]
-      [:a.wallet-btn-left {:href (str "#/")}
-       [:div.wallet.btn-wallet
-        [:div.wallet-href-name "Recieve"]
-        ] [:div.clearfix]]
-      [:a.wallet-btn-right {:href (str "#/")}
-       [:div.wallet.btn-wallet
-        [:div.wallet-href-name "Send"]
-        ] [:div.clearfix]]]
-     [all-transactions]]))
+                   @accounts))]]
+     [:a.manage-wallet-btn {:href (str "#/")}
+      [:span "Add wallets"]
+      [:div.clearfix]]]))

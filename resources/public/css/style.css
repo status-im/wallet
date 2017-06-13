@@ -1065,3 +1065,52 @@ input:focus{
         margin-right: 16px;
     }
 }
+.wallets.manage-wallets {
+    background: #fff;
+    color: #000;
+}
+.wallets.manage-wallets {
+    .wallet {
+        border: none;
+    }
+}
+.wallet-name.manage-wallet{
+    color: #000;
+}
+.manage-wallet-cur {
+    color: silver;
+    padding-left: 5px;
+}
+.currency-usd.manage-wallets {
+    color: #000;
+    right: 60px;
+}
+
+.wallet-points.manage-wallets {
+    position: absolute;
+    right: 15px;
+    top: -10px;
+    color: silver;
+    font-size: 2.5em;
+}
+
+.manage-wallets-item {
+    border-bottom: 2px solid silver;
+    padding-bottom: 20px;
+    position: relative;
+}
+
+.manage-wallet-btn {
+    background: #628fe3;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    width: 89%;
+    display: block;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 6px;
+}
