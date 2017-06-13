@@ -315,7 +315,7 @@ h2 {
     border-bottom-right-radius: 10px;
     background: #517bc9;
     border-bottom-left-radius: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
 }
 
 .cur{
@@ -464,10 +464,11 @@ span.currency {
     border: none;
 }
 
-.wallets-detail .wallet-href-name {
+.wallet-href-name {
     padding-bottom: 10px;
     color: #fff;
     padding-top: 10px;
+    text-align: center;
 }
 
 .wallet-amount.detail {
