@@ -62,9 +62,9 @@
             [:p wallet-id]
            ]
           [:div.wallets-detail
-            [:a.wallet-btn-left {:href (str "#/")}
+            [:div.wallet-btn-left
              [:div.btn-wallet
-              [:div.wallet-href-name "Copy Address"]
+              [:div.wallet-href-name [clipboard-button "Copy Address" wallet-id]]
               ] [:div.clearfix]]
             [:a.wallet-btn-right {:href (str "#/")}
              [:div.btn-wallet
