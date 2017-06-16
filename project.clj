@@ -41,7 +41,9 @@
                     :output-dir           "resources/public/js/compiled/out"
                     :asset-path           "js/compiled/out"
                     :foreign-libs         [{:file     "resources/js/react-slick.js"
-                                            :provides ["react-slick"]}]
+                                            :provides ["react-slick"]}
+                                           {:file     "resources/js/qrcode.js"
+                                            :provides ["qrcode"]}]
                     :source-map-timestamp true}}
 
     {:id           "min"
@@ -51,13 +53,17 @@
                     :optimizations   :advanced
                     :closure-defines {goog.DEBUG false}
                     :foreign-libs    [{:file     "resources/js/react-slick.min.js"
-                                       :provides ["react-slick"]}]
+                                       :provides ["react-slick"]}
+                                      {:file     "resources/js/qrcode.min.js"
+                                       :provides ["qrcode"]}]
                     :pretty-print    false
                     :externs         ["resources/externals/status.ext.js"]}}
     {:id           "test"
      :source-paths ["src/cljs" "test/cljs"]
      :compiler     {:output-to     "resources/public/js/compiled/test.js"
                     :foreign-libs  [{:file     "resources/js/react-slick.js"
-                                     :provides ["react-slick"]}]
+                                     :provides ["react-slick"]}
+                                    {:file     "resources/js/qrcode.js"
+                                     :provides ["qrcode"]}]
                     :main          token.runner
                     :optimizations :none}}]})

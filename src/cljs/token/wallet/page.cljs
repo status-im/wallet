@@ -7,7 +7,8 @@
             [re-frame.core :as re-frame]
             [token.status :as status]
             [token.db :as db]
-            [token.utils :as u]))
+            [token.utils :as u]
+            [token.components.qr :as qr]))
 
 (defn nav [wallet-id]
   [:div.top-nav
@@ -62,15 +63,15 @@
             [:p wallet-id]
            ]
           [:div.wallets-detail
-            [:div.wallet-btn-left
-             [:div.btn-wallet
-              [:div.wallet-href-name [clipboard-button "Copy Address" wallet-id]]
-              ] [:div.clearfix]]
-            [:a.wallet-btn-right {:href (str "#/")}
-             [:div.btn-wallet
-              [:div.wallet-href-name "Show CR"]
-              ] [:div.clearfix]]
-            [:div.clearfix]
+           [:div.wallet-btn-left
+            [:div.btn-wallet
+             [:div.wallet-href-name [clipboard-button "Copy Address" wallet-id]]
+             ] [:div.clearfix]]
+           [:div.wallet-btn-right
+            [:div.btn-wallet
+             [:div.wallet-href-name [qr/qr-popup "Show QR" wallet-id]]
+             ] [:div.clearfix]]
+           [:div.clearfix]
            ]]]))))
 
 (defn format-date [date-format date]
