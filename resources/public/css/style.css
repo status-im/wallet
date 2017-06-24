@@ -1092,4 +1092,16 @@ input:focus{
     .fee-amount {
         margin-right: 16px;
     }
+
+    .qr-popup-content {
+        max-width: 256px;
+        min-width: 256px;
+    }
+}
+
+@media only screen and (max-width: 256px) {
+    .qr-popup-content {
+        max-width: 128px;
+        min-width: 128px;
+    }
 }

@@ -2,6 +2,13 @@
   (:require [reagent.core :as reagent]
             [qrcode]))
 
+(defn get-qr-size
+  [w]
+  (cond
+    (< w 256) 128
+    (< w 650) 256
+    :else 512))
+
 (defn qr-popup
   [label text]
   (let [show? (reagent/atom false)]
@@ -9,10 +16,11 @@
      {:display-name "clipboard-button"
       :component-did-mount
       #(let [dom-node (aget (js/document.getElementsByClassName "qr-popup-content-qr") 0)
+             w (get-qr-size js/window.innerWidth)
              qr (js/QRCode. dom-node
                             #js {:text text
-                                 :width 512
-                                 :height 512
+                                 :width w
+                                 :height w
                                  :colorDark "#000000"
                                  :colorLight  "#ffffff",
                                  :correctLevel js/QRCode.CorrectLevel.H})]
