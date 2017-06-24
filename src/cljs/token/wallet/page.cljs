@@ -7,11 +7,12 @@
             [re-frame.core :as re-frame]
             [token.status :as status]
             [token.db :as db]
-            [token.utils :as u]))
+            [token.utils :as u]
+            [token.components.qr :as qr]))
 
 (defn nav [wallet-id]
   [:div.top-nav
-   [:h2 "Main wallet"]
+   [:h2 "Wallet"]
    [:div.nav-left
     [:a.nav-back
      {:on-click
@@ -45,43 +46,33 @@
                          #_(println (str "callback " (.stringify js/JSON params))))))
 
 (defn wallet-info [wallet-id]
-  (let [balance        (subscribe [:get-in (db/wallet-balance-path wallet-id)])
-        send-amount    (subscribe [:get :send-amount])
+  (let [balance (subscribe [:get-in (db/wallet-balance-path wallet-id)])
+        send-amount (subscribe [:get :send-amount])
         request-amount (subscribe [:get :request-amount])
         text           (subscribe [:get :text])]
     (fn [wallet-id]
       (let [balance-fmt (format-wei (unit->wei @balance "ether"))]
         [:div.wallet-container
          [:div.wallet
-          [:div.wallet-amount
-           [:p (to-fixed (:amount balance-fmt) 6)]
-           [:span (:unit balance-fmt)]]
-          [:div.wallet-send.row
-           [:p.title "Send ETH"]
-           [:div.amount-controls
-            [:input.amount {:placeholder "Enter amount"
-                            :value       @send-amount
-                            :on-change   #(dispatch [:set :send-amount (u/value %)])
-                            :type        :number}]
-            [:div.column
-             [:span {:on-click (when (pos? (js/parseFloat @balance))
-                                 #(send-money @send-amount))} "SEND"]]]]
-          [:div.wallet-request.row
-           [:p.title "Request ETH"]
-           [:div.amount-controls
-            [:input.amount {:placeholder "Enter amount"
-                            :value       @request-amount
-                            :on-change   #(dispatch [:set :request-amount (u/value %)])
-                            :type        :number}]
-            [:div.column
-             [:span {:on-click #(request-money @request-amount)}
-              "RECEIVE"]]]]]]))))
-
-(defn address [wallet-id]
-  [:div.wallet-address-container
-   [:div.wallet-address
-    [:span "Address"]
-    [:p wallet-id]]])
+          [:div.wallet-amount.detail
+           [:div.left-block "Main wallet"
+            [:span.wallet-points.detail "..."]
+            ]
+            [:p (to-fixed (:amount balance-fmt) 2) [:span.unitDetail (:unit balance-fmt)]]
+            [:div.address-detail "Address"]
+            [:p wallet-id]
+           ]
+          [:div.wallets-detail
+           [:div.wallet-btn-left
+            [:div.btn-wallet
+             [:div.wallet-href-name [clipboard-button "Copy Address" wallet-id]]
+             ] [:div.clearfix]]
+           [:div.wallet-btn-right
+            [:div.btn-wallet
+             [:div.wallet-href-name [qr/qr-popup "Show QR" wallet-id]]
+             ] [:div.clearfix]]
+           [:div.clearfix]
+           ]]]))))
 
 (defn format-date [date-format date]
   (.format (goog.i18n.DateTimeFormat. date-format)
@@ -94,11 +85,11 @@
   (let [{:keys [from to value timeStamp hash timestamp confirmations]}
         (js->clj tx :keywordize-keys true)
         {:keys [amount unit]} (format-wei value)
-        timestamp'   (or timestamp (* 1000 timeStamp))
-        incoming?    (= to wallet-id)
+        timestamp' (or timestamp (* 1000 timeStamp))
+        incoming? (= to wallet-id)
         action-class {:class (if incoming? "action-add" "action-remove")}
         amount-class {:class (if incoming? "green" "red")}
-        sign         (if incoming? "+" "-")]
+        sign (if incoming? "+" "-")]
     ^{:key hash}
     [:div.transaction
      [:div.transaction-action [:div action-class]]
@@ -112,11 +103,11 @@
         (str sign amount " " unit)]]]]))
 
 (defn transactions [wallet-id]
-  (let [transactions         (subscribe [:get-in (db/wallet-transactions-path wallet-id)])
+  (let [transactions (subscribe [:get-in (db/wallet-transactions-path wallet-id)])
         pending-transactions (subscribe [:pending-transactions wallet-id])]
     [:div.wallet-transactions-container
      [:div.wallet-transactions
-      [:span "Transactions"]
+      [:span "Transaction history"]
       (if (and (empty @pending-transactions) (empty? @transactions))
         [:div.no-transactions "No transactions found"]
         (concat
@@ -129,5 +120,4 @@
   [:div.wallet-screen
    [nav wallet-id]
    [wallet-info wallet-id]
-   [address wallet-id]
    [transactions wallet-id]])
