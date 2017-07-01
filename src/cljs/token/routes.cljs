@@ -33,4 +33,8 @@
   (defroute "/transaction" []
             (dispatch [:set-active-panel :transaction-panel]))
 
+  (defroute "/manage-wallets" []
+            (dispatch [:set :current-wallet nil])
+            (dispatch [:set-active-panel :manage-wallets-panel]))
+
   (hook-browser-navigation!))

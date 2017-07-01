@@ -16,5 +16,4 @@
                        (reset! clipboard-atom nil))
        :reagent-render
                      (fn []
-                       [:div.button {:data-clipboard-text text}
-                        [:span.button-copy] label])})))
+                       [:div.button.button-clipboard {:data-clipboard-text text} label])})))
