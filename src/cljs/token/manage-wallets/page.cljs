@@ -16,7 +16,7 @@
           [:span.wallet-currencies
            [:div.currency-usd.manage-wallets
             (to-fixed (:amount balance-fmt) 4) [:span.manage-wallet-cur (:unit balance-fmt)]]]
-            [:span.wallet-points.manage-wallets "..."]
+            [:span.wallet-points.manage-wallets ""]
           ] [:div.clearfix]]))))
 
 (defn manage-wallets []

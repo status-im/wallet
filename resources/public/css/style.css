@@ -1100,10 +1100,11 @@ input:focus{
 
 .wallet-points.manage-wallets {
     position: absolute;
-    right: 15px;
-    top: -10px;
-    color: silver;
-    font-size: 2.5em;
+    right: 10px;
+    top: 20px;
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+    filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
 }
 
 .manage-wallets-item {
