@@ -55,11 +55,11 @@
          [:div.wallet
           [:div.wallet-amount.detail
            [:div.left-block "Main wallet"
-            [:span.wallet-points.detail "..."]
+            [:span.wallet-points.detail ""]
             ]
             [:p (to-fixed (:amount balance-fmt) 2) [:span.unitDetail (:unit balance-fmt)]]
             [:div.address-detail "Address"]
-            [:p wallet-id]
+            [:p.walletAddress wallet-id]
            ]
           [:div.wallets-detail
             [:div.wallet-btn-left
@@ -86,20 +86,18 @@
         {:keys [amount unit]} (format-wei value)
         timestamp' (or timestamp (* 1000 timeStamp))
         incoming? (= to wallet-id)
-        action-class {:class (if incoming? "action-add" "action-remove")}
-        amount-class {:class (if incoming? "green" "red")}
-        sign (if incoming? "+" "-")]
+        action-class {:class (if incoming? "action-add" "action-remove")}]
     ^{:key hash}
     [:div.transaction
      [:div.transaction-action [:div action-class]]
      [:div.transaction-details
-      [:div.transaction-name (account-name (if incoming? from to))]
-      [:div.transaction-date (str (format-date "d MMM 'at' hh:mm" timestamp')
+      [:div.transaction-amount
+       [:span [:span.amount amount] unit]]
+      [:div.transaction-name [:span.transaction-type (if incoming? "from" "to")] (account-name (if incoming? from to))]
+      [:div.transaction-date (str (format-date "d MMM hh:mm" timestamp')
                                   " "
                                   (when-not confirmations "(pending...)"))]
-      [:div.transaction-amount
-       [:span amount-class
-        (str sign amount " " unit)]]]]))
+]]))
 
 (defn transactions [wallet-id]
   (let [transactions (subscribe [:get-in (db/wallet-transactions-path wallet-id)])

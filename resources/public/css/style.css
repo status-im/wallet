@@ -57,7 +57,7 @@ h2 {
     text-transform: uppercase;
     color: #628fe3;
     font-weight: 800;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
 }
 
 .top-nav .nav-left {
@@ -130,7 +130,7 @@ h2 {
 }
 
 .wallets .wallet {
-    border-bottom: 2px solid #4669ad;
+    border-bottom: 1px solid rgba(31, 37, 63, 0.2);
     padding-bottom: 20px;
     position: relative;
     margin-left: 15px;
@@ -169,7 +169,7 @@ h2 {
 }
 
 .wallet-name {
-    padding-top: 20px;
+    padding-top: 25px;
     text-align: left;
 }
 
@@ -180,24 +180,23 @@ h2 {
 .wallet-points {
     position: absolute;
     right: 20px;
-    top: -16px;
-    color: #4669ad;
-    font-size: 3em;
+    top: 19px;
+    background: url('assets/dots.png') no-repeat;
+    width: 35px;
+    height: 35px;
+    background-size: 35px;
 }
-
-.wallet-points.detail{
-    top: -25px;
-    color: #4669ad;
-    font-size: 3em;
+.wallet-points.detail {
+    top: 5px;
 }
 
 .btn-wallet {
     margin-left: 0 !important;
-    border-top: 2px solid #4669ad !important;
+    border-top: 1px solid rgba(31, 37, 63, 0.2) !important;
 }
 
 .wallet-name span.cur {
-    margin-left: 10px;
+    margin-left: 3px;
     color: #c0d2f3 !important;
 }
 
@@ -319,12 +318,12 @@ h2 {
 }
 
 .cur{
-    margin-left: 10px;
+    margin-left: 3px;
 }
 
 .wallet-btn-left{
     float: left;
-    border-right: 2px solid #4669ad;
+    border-right: 1px solid rgba(31, 37, 63, 0.2);
     position: relative;
     z-index: 1111111;
     border-bottom-left-radius: 10px;
@@ -333,7 +332,7 @@ h2 {
 .currency-usd, .currency-rub {
     font-size: 25px;
     position: absolute;
-    top: 20px;
+    top: 25px;
     right: 20px;
 }
 
@@ -356,7 +355,6 @@ span.currency {
     display: block;
     margin-top: 20px;
     padding: 32px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
     color: #838c93;
     text-decoration: none;
     font-size: 32px;
@@ -420,6 +418,9 @@ span.currency {
     -webkit-touch-callout: none;
     -webkit-user-select: auto;
 }
+.wallet-amount p.walletAddress {
+    font-size: 11px;
+}
 
 .wallet-amount span {
     color: #fff;
@@ -437,6 +438,7 @@ span.currency {
 
 .left-block span {
     font-size: 12px;
+    font-weight: 800;
 }
 
 .address-detail {
@@ -604,12 +606,10 @@ input.amount {
     font-size: 32px;
 }
 
-.transaction-amount .red {
-    color: #c95656;
-}
-
-.transaction-amount .green {
-    color: #5fc48d;
+.transaction-amount .amount {
+    font-weight: 800;
+    margin-right: 3px;
+    color: #000;
 }
 
 .button-full {
@@ -982,21 +982,33 @@ input:focus{
         margin-left: 24px;
         width: 80%;
         padding-bottom: 16px;
+        height: 30px;
     }
 
     .transaction-name {
         font-size: 14px;
+        position: absolute;
+        bottom: 0;
     }
 
     .transaction-date {
         font-size: 12px;
+        right: 0;
+        bottom: 0;
+        position: absolute;
     }
 
     .transaction-amount {
         font-size: 16px;
-        top: 8px;
-        right: 0;
+        top: 0;
+        left: 0;
         margin-right: 16px;
+    }
+
+    .transaction-type {
+        margin-right: 3px;
+        color: #838c93;
+        font-size: 11px;
     }
 
     .top-nav h2 {

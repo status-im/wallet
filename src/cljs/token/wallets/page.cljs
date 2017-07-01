@@ -50,7 +50,7 @@
       [:a.wallet-btn {:href (str "#/manage-wallets")}
        [:div.wallet.manage-wallet
         [:div.wallet-name "Manage wallets"]
-        [:span.wallet-points "..."]
+        [:span.wallet-points ""]
         ] [:div.clearfix]]
       [:a.wallet-btn-left {:href (str "#/")}
        [:div.wallet.btn-wallet
